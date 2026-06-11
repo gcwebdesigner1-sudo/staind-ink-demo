@@ -818,7 +818,7 @@
       .gallery-grid { columns: 2; }
       .rw-grid { grid-template-columns: repeat(2, 1fr); }
       .styles-grid { grid-template-columns: 1fr 1fr; }
-      .contact-inner { grid-template-columns: 1fr; gap: 48px; }
+      .contact-inner { grid-template-columns: 1fr; gap: 40px; }
       .footer-inner { grid-template-columns: 1fr 1fr; }
       .footer-brand { grid-column: 1 / -1; }
       .form-row { grid-template-columns: 1fr; }
@@ -858,8 +858,7 @@
     </h1>
     <p class="hero-sub">Custom tattoo work by Brad Mejia. Traditional, black & grey, realism, and everything in between — built to last a lifetime.</p>
     <div class="hero-actions">
-      <a href="#contact" class="btn-primary">Book a Session</a>
-      <a href="#gallery" class="btn-ghost">View the Work</a>
+      <a href="#gallery" class="btn-primary">View the Work</a>
     </div>
   </div>
   <div class="hero-scroll">Scroll</div>
@@ -1069,7 +1068,7 @@
   <p class="wi-label">No Appointment Needed</p>
   <h2 class="wi-title">Walk In.<br>Walk Out <em>Tattooed.</em></h2>
   <p class="wi-sub">Brad is in the shop daily. Bring your idea — or pick from the flash sheet. No waiting, no hassle.</p>
-  <a href="#contact" class="btn-dark">Get Tattooed Today</a>
+  <a href="tel:5412812993" class="btn-dark">(541) 281-2993</a>
   <div class="price-pills">
     <div class="pill">Flash pieces <strong>from $10</strong></div>
     <div class="pill">Custom work <strong>by appointment or walk-in</strong></div>
@@ -1082,9 +1081,9 @@
 <section id="contact">
   <div class="contact-inner">
     <div class="contact-info reveal">
-      <span class="section-label">Book a Session</span>
-      <h2 class="section-title">Let's Build<br>Something</h2>
-      <p class="section-body">Have an idea? Fill out the form and Brad will get back to you to discuss placement, sizing, and pricing. Or just walk in — no form required.</p>
+      <span class="section-label">Find Us</span>
+      <h2 class="section-title">Come<br>Find Us</h2>
+      <p class="section-body">No appointment needed. Walk in any Tuesday through Saturday and Brad will take care of you. Flash pieces start at $10.</p>
 
       <div style="margin-top:40px;">
         <div class="info-row">
@@ -1119,7 +1118,7 @@
     </div>
 
     <div class="reveal reveal-delay-2">
-      <div class="map-wrap" style="margin-bottom:24px;">
+      <div class="map-wrap">
         <span class="map-label">Klamath Falls, OR</span>
         <iframe
           src="https://maps.google.com/maps?q=116+N+9th+St+Klamath+Falls+OR+97601&output=embed"
@@ -1128,43 +1127,6 @@
           title="Stain'd INK Tattoo Location"
         ></iframe>
       </div>
-      <form class="book-form" onsubmit="handleSubmit(event)">
-        <div class="form-row">
-          <div class="form-group">
-            <label for="fname">First Name</label>
-            <input type="text" id="fname" placeholder="Jake" />
-          </div>
-          <div class="form-group">
-            <label for="lname">Last Name</label>
-            <input type="text" id="lname" placeholder="Jones" />
-          </div>
-        </div>
-        <div class="form-group">
-          <label for="email">Email</label>
-          <input type="email" id="email" placeholder="you@email.com" />
-        </div>
-        <div class="form-group">
-          <label for="style">Tattoo Style</label>
-          <select id="style">
-            <option value="">Select a style...</option>
-            <option>American Traditional</option>
-            <option>Black & Grey</option>
-            <option>Neo-Traditional</option>
-            <option>Realism</option>
-            <option>Illustrative</option>
-            <option>Custom Flash</option>
-            <option>Not Sure — Let's Talk</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label for="idea">Your Idea</label>
-          <textarea id="idea" placeholder="Describe your tattoo idea, placement, and approximate size..."></textarea>
-        </div>
-        <p class="form-note">
-          Prefer to reach out directly? DM on <a href="https://instagram.com/mejia.ink" target="_blank">@mejia.ink</a> or call <a href="tel:5412812993">(541) 281-2993</a>. Walk-ins are always welcome.
-        </p>
-        <button type="submit" class="btn-submit">Send Inquiry →</button>
-      </form>
     </div>
   </div>
 </section>
