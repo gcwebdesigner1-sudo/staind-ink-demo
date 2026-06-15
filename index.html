@@ -413,19 +413,30 @@
 
     /* Artist info below card */
     .acard-info {
-      padding: 9px 6px 22px;
+      padding: 12px 6px 24px;
       text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+    }
+    .acard-avatar {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 1px solid rgba(240,240,240,0.18);
+      margin-bottom: 4px;
     }
     .acard-style {
-      font-size: 11px;
+      font-size: 10px;
       color: var(--grey2);
       letter-spacing: 0.04em;
       text-transform: none;
-      margin-bottom: 3px;
     }
     .acard-name {
       font-family: 'Antonio', sans-serif;
-      font-size: clamp(1rem, 2.2vw, 1.75rem);
+      font-size: clamp(1.1rem, 2.2vw, 1.6rem);
       font-weight: 400;
       letter-spacing: 0.07em;
     }
@@ -483,50 +494,70 @@
 
     /* ── STYLES ── */
     #styles {
-      padding: 72px 26px;
+      padding: 72px 0;
       border-top: 1px solid var(--border);
       text-align: center;
     }
+    #styles .section-h2, #styles .section-p { padding: 0 26px; }
     .styles-track {
       display: flex;
       overflow-x: auto;
-      gap: 2px;
-      max-width: 1180px;
-      margin: 36px auto 0;
+      gap: 3px;
+      margin: 36px 0 0;
       scrollbar-width: none;
       cursor: grab;
+      padding: 0 26px;
     }
     .styles-track::-webkit-scrollbar { display: none; }
     .scard {
-      flex: 0 0 260px;
-      background: var(--coal2);
-      border: 1px solid var(--border);
-      padding: 32px 26px;
-      text-align: left;
-      transition: border-color 0.3s;
+      flex: 0 0 340px;
+      height: 480px;
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
     }
-    .scard:hover { border-color: rgba(240,240,240,0.3); }
+    .scard-bg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s ease, filter 0.4s;
+      filter: brightness(0.45);
+    }
+    .scard:hover .scard-bg { transform: scale(1.06); filter: brightness(0.6); }
+    .scard-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.75) 0%, transparent 60%);
+    }
+    .scard-content {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      padding: 28px 22px;
+      text-align: left;
+    }
     .scard-num {
       font-family: 'Antonio', sans-serif;
-      font-size: 2.2rem;
-      color: rgba(240,240,240,0.12);
-      line-height: 1;
-      margin-bottom: 14px;
-      transition: color 0.3s;
+      font-size: 0.75rem;
+      color: rgba(240,240,240,0.45);
+      letter-spacing: 0.18em;
+      margin-bottom: 8px;
     }
-    .scard:hover .scard-num { color: rgba(240,240,240,0.3); }
     .scard-name {
       font-family: 'Antonio', sans-serif;
-      font-size: 1.3rem;
-      letter-spacing: 0.07em;
-      margin-bottom: 10px;
+      font-size: 1.55rem;
+      letter-spacing: 0.06em;
+      margin-bottom: 8px;
+      line-height: 1.1;
     }
     .scard-desc {
-      font-size: 11px;
-      color: var(--grey2);
+      font-size: 10px;
+      color: rgba(240,240,240,0.55);
       line-height: 1.75;
       letter-spacing: 0.03em;
       text-transform: none;
+      max-width: 260px;
     }
 
     /* ── CONTACT ── */
@@ -877,8 +908,9 @@
         </div>
       </div>
       <div class="acard-info">
-        <p class="acard-style">Traditional · Black &amp; Grey · Realism</p>
+        <img class="acard-avatar" src="https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?w=120&q=85&fit=crop&crop=face" alt="Brad Mejia"/>
         <h3 class="acard-name">Brad Mejia</h3>
+        <p class="acard-style">Traditional · Black &amp; Grey · Realism</p>
       </div>
     </a>
 
@@ -924,12 +956,36 @@
   <h2 class="section-h2">Styles</h2>
   <p class="section-p">Every style mastered by one artist.</p>
   <div class="styles-track">
-    <div class="scard"><div class="scard-num">01</div><div class="scard-name">American Traditional</div><p class="scard-desc">Bold outlines, classic iconography — sparrows, skulls, scorpions, anchors. Built to look great for decades.</p></div>
-    <div class="scard"><div class="scard-num">02</div><div class="scard-name">Black &amp; Grey</div><p class="scard-desc">Timeless monochrome with smooth gradients and deep contrast. Elegant, dramatic, and built to age beautifully.</p></div>
-    <div class="scard"><div class="scard-num">03</div><div class="scard-name">Neo-Traditional</div><p class="scard-desc">Classic motifs reimagined with modern illustration — rich color palettes and detailed linework.</p></div>
-    <div class="scard"><div class="scard-num">04</div><div class="scard-name">Realism</div><p class="scard-desc">Photorealistic portraits, wildlife, fine-detail pieces that look like they belong in a frame — on your skin.</p></div>
-    <div class="scard"><div class="scard-num">05</div><div class="scard-name">Illustrative</div><p class="scard-desc">Detailed linework and custom illustration-style pieces. Owls, turtles, penguins, everything in between.</p></div>
-    <div class="scard"><div class="scard-num">06</div><div class="scard-name">Custom Flash</div><p class="scard-desc">Walk in, pick a design, walk out tattooed. Pre-drawn flash sheets starting from $10. No appointment needed.</p></div>
+    <div class="scard">
+      <img class="scard-bg" src="https://images.unsplash.com/photo-1611501275019-9b5cda994e8d?w=700&q=85&fit=crop" alt="American Traditional"/>
+      <div class="scard-overlay"></div>
+      <div class="scard-content"><div class="scard-num">01</div><div class="scard-name">American Traditional</div><p class="scard-desc">Bold outlines, classic iconography — sparrows, skulls, scorpions, anchors. Built to look great for decades.</p></div>
+    </div>
+    <div class="scard">
+      <img class="scard-bg" src="https://images.unsplash.com/photo-1568515387631-8b650bbcdb90?w=700&q=85&fit=crop" alt="Black & Grey"/>
+      <div class="scard-overlay"></div>
+      <div class="scard-content"><div class="scard-num">02</div><div class="scard-name">Black &amp; Grey</div><p class="scard-desc">Timeless monochrome with smooth gradients and deep contrast. Elegant, dramatic, and built to age beautifully.</p></div>
+    </div>
+    <div class="scard">
+      <img class="scard-bg" src="https://images.unsplash.com/photo-1597852075234-fd721ac361d3?w=700&q=85&fit=crop" alt="Neo-Traditional"/>
+      <div class="scard-overlay"></div>
+      <div class="scard-content"><div class="scard-num">03</div><div class="scard-name">Neo-Traditional</div><p class="scard-desc">Classic motifs reimagined with modern illustration — rich color palettes and detailed linework.</p></div>
+    </div>
+    <div class="scard">
+      <img class="scard-bg" src="https://images.unsplash.com/photo-1605647533135-51b5906087d0?w=700&q=85&fit=crop" alt="Realism"/>
+      <div class="scard-overlay"></div>
+      <div class="scard-content"><div class="scard-num">04</div><div class="scard-name">Realism</div><p class="scard-desc">Photorealistic portraits, wildlife, and fine-detail pieces that look like they belong in a frame.</p></div>
+    </div>
+    <div class="scard">
+      <img class="scard-bg" src="https://images.unsplash.com/photo-1552627019-947c3789ffb5?w=700&q=85&fit=crop" alt="Illustrative"/>
+      <div class="scard-overlay"></div>
+      <div class="scard-content"><div class="scard-num">05</div><div class="scard-name">Illustrative</div><p class="scard-desc">Detailed linework and custom illustration-style pieces. Owls, turtles, penguins, everything in between.</p></div>
+    </div>
+    <div class="scard">
+      <img class="scard-bg" src="https://images.unsplash.com/photo-1568515045052-f9a854d70bfd?w=700&q=85&fit=crop" alt="Flash"/>
+      <div class="scard-overlay"></div>
+      <div class="scard-content"><div class="scard-num">06</div><div class="scard-name">Custom Flash</div><p class="scard-desc">Walk in, pick a design, walk out tattooed. Pre-drawn flash sheets starting from $10. No appointment needed.</p></div>
+    </div>
   </div>
 </section>
 
