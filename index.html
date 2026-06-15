@@ -1,1162 +1,986 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Stain'd INK Tattoo — Klamath Falls, OR</title>
+
+  <!-- Antonio ≈ Ganga's "Aro" display font | Inter ≈ Ganga's "NB International Pro" body font -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,700;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Antonio:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
   <style>
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
     :root {
-      --bg:        #080808;
-      --surface:   #111111;
-      --surface2:  #1a1a1a;
-      --border:    #222222;
-      --text:      #f0f0f0;
-      --muted:     #888888;
-      --accent:    #c8a96e;
-      --accent2:   #e63946;
-      --white:     #ffffff;
+      --coal:     #0A0A0A;
+      --coal2:    #111111;
+      --off:      #F0F0F0;
+      --grey:     #555555;
+      --grey2:    #888888;
+      --border:   rgba(240,240,240,0.1);
     }
 
     html { scroll-behavior: smooth; }
 
     body {
-      background: var(--bg);
-      color: var(--text);
+      background: var(--coal);
+      color: var(--off);
       font-family: 'Inter', sans-serif;
       font-weight: 300;
-      line-height: 1.6;
       overflow-x: hidden;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
     }
 
-    /* ── SCROLLBAR ── */
-    ::-webkit-scrollbar { width: 4px; }
-    ::-webkit-scrollbar-track { background: var(--bg); }
-    ::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 2px; }
+    ::-webkit-scrollbar { width: 2px; }
+    ::-webkit-scrollbar-track { background: var(--coal); }
+    ::-webkit-scrollbar-thumb { background: var(--grey); }
 
-    /* ── NAV ── */
-    nav {
+    /* ── GANGA-STYLE "BOOK NOW" BUTTON — frosted glass pill ── */
+    .btn-book {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(240,240,240,0.08);
+      border: 1px solid rgba(240,240,240,0.55);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      color: var(--off);
+      border-radius: 6px;
+      padding: 3px 11px;
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+      font-weight: 400;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background 0.25s;
+      white-space: nowrap;
+      line-height: 1.6;
+    }
+    .btn-book:hover { background: rgba(240,240,240,0.22); }
+    button.btn-book { font-family: 'Inter', sans-serif; }
+
+    /* ── FIXED LOGO (top-left, like Ganga) ── */
+    #site-logo {
+      position: fixed;
+      top: 26px;
+      left: 26px;
+      z-index: 110;
+    }
+    #site-logo a {
+      font-family: 'Antonio', sans-serif;
+      font-size: 1.25rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      color: var(--off);
+      text-decoration: none;
+    }
+
+    /* ── HEADER — nav centered, book now right (Ganga exact) ── */
+    #main-header {
       position: fixed;
       top: 0; left: 0; right: 0;
       z-index: 100;
+      transition: transform 0.3s ease;
+    }
+    .header-fade {
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 210px;
+      background: linear-gradient(to bottom,rgba(0,0,0,0.72) 0%,rgba(0,0,0,0.28) 55%,transparent 100%);
+      pointer-events: none;
+    }
+    .header-row {
       display: flex;
-      align-items: center;
       justify-content: space-between;
-      padding: 20px 48px;
-      transition: background 0.4s ease, padding 0.4s ease;
-    }
-    nav.scrolled {
-      background: rgba(8,8,8,0.96);
-      backdrop-filter: blur(12px);
-      border-bottom: 1px solid var(--border);
-      padding: 14px 48px;
-    }
-    .nav-logo {
-      font-family: 'Bebas Neue', cursive;
-      font-size: 1.6rem;
-      letter-spacing: 3px;
-      color: var(--white);
-      text-decoration: none;
-    }
-    .nav-logo span { color: var(--accent); }
-    .nav-links {
-      display: flex;
       align-items: center;
-      gap: 36px;
+      padding: 26px 26px;
+      position: relative;
+    }
+    /* invisible spacer to balance the logo on the left */
+    .header-spacer {
+      font-family: 'Antonio', sans-serif;
+      font-size: 1.25rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      visibility: hidden;
+    }
+    .header-nav {
+      display: flex;
+      gap: 56px;
       list-style: none;
     }
-    .nav-links a {
-      color: var(--muted);
+    .header-nav a {
+      color: var(--off);
       text-decoration: none;
-      font-size: 0.78rem;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      font-weight: 500;
-      transition: color 0.2s;
-    }
-    .nav-links a:hover { color: var(--white); }
-    .nav-cta {
-      background: var(--accent);
-      color: var(--bg) !important;
-      padding: 10px 22px;
-      border-radius: 2px;
-      font-weight: 600 !important;
-      transition: background 0.2s, transform 0.2s !important;
-    }
-    .nav-cta:hover { background: #e0be86 !important; transform: translateY(-1px); }
-    .nav-phone {
-      font-size: 0.78rem;
-      letter-spacing: 1px;
-      color: var(--muted);
-      text-decoration: none;
+      font-size: 14px;
       font-weight: 400;
+      letter-spacing: 0.05em;
+      transition: opacity 0.2s;
     }
-    .nav-phone:hover { color: var(--accent); }
+    .header-nav a:hover { opacity: 0.6; }
+    #clock { font-size: 14px; color: var(--off); }
 
-    /* ── HERO ── */
-    #hero {
-      position: relative;
-      height: 100vh;
-      min-height: 700px;
-      display: flex;
-      align-items: flex-end;
-      overflow: hidden;
+    /* ── MOBILE BOOK BUTTON ── */
+    #mob-book {
+      display: none;
+      position: fixed;
+      top: 26px;
+      right: 66px;
+      z-index: 110;
     }
-    .hero-bg {
-      position: absolute;
-      inset: 0;
-      background-image: url('https://images.unsplash.com/photo-1568515045052-f9a854d70bfd?w=1600&q=85&fit=crop');
-      background-size: cover;
-      background-position: center;
-      filter: brightness(0.45) contrast(1.1);
-      transform: scale(1.04);
-      transition: transform 8s ease;
-    }
-    #hero:hover .hero-bg { transform: scale(1.0); }
-    .hero-gradient {
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(
-        to bottom,
-        rgba(8,8,8,0.2) 0%,
-        rgba(8,8,8,0.05) 40%,
-        rgba(8,8,8,0.7) 75%,
-        rgba(8,8,8,1) 100%
-      );
-    }
-    .hero-content {
-      position: relative;
-      z-index: 2;
-      padding: 0 48px 80px;
-      max-width: 900px;
-    }
-    .hero-eyebrow {
-      font-size: 0.72rem;
-      letter-spacing: 4px;
-      text-transform: uppercase;
-      color: var(--accent);
-      font-weight: 500;
-      margin-bottom: 16px;
-      opacity: 0;
-      animation: fadeUp 0.8s ease 0.3s forwards;
-    }
-    .hero-title {
-      font-family: 'Bebas Neue', cursive;
-      font-size: clamp(5rem, 13vw, 11rem);
-      line-height: 0.9;
-      letter-spacing: 2px;
-      color: var(--white);
-      margin-bottom: 24px;
-      opacity: 0;
-      animation: fadeUp 0.9s ease 0.5s forwards;
-    }
-    .hero-title em {
-      font-style: italic;
-      font-family: 'Playfair Display', serif;
-      color: var(--accent);
-      font-size: 0.7em;
-      display: block;
-    }
-    .hero-sub {
-      font-size: 1rem;
-      color: rgba(255,255,255,0.65);
-      max-width: 480px;
-      line-height: 1.7;
-      margin-bottom: 36px;
-      opacity: 0;
-      animation: fadeUp 0.9s ease 0.7s forwards;
-    }
-    .hero-actions {
-      display: flex;
-      gap: 16px;
+
+    /* ── HAMBURGER ── */
+    #ham-btn {
+      display: none;
+      position: fixed;
+      top: 26px;
+      right: 26px;
+      z-index: 110;
+      flex-direction: column;
+      justify-content: center;
       align-items: center;
-      opacity: 0;
-      animation: fadeUp 0.9s ease 0.9s forwards;
+      gap: 5px;
+      width: 30px;
+      height: 30px;
+      background: none;
+      border: none;
+      cursor: pointer;
     }
-    .btn-primary {
-      background: var(--accent);
-      color: var(--bg);
-      padding: 15px 36px;
-      font-size: 0.8rem;
-      font-weight: 600;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      text-decoration: none;
-      border-radius: 2px;
-      transition: background 0.2s, transform 0.2s;
-      display: inline-block;
+    .ham-line {
+      display: block;
+      width: 22px;
+      height: 1.5px;
+      background: var(--off);
+      transition: all 0.3s;
     }
-    .btn-primary:hover { background: #e0be86; transform: translateY(-2px); }
-    .btn-ghost {
-      border: 1px solid rgba(255,255,255,0.3);
-      color: var(--white);
-      padding: 15px 36px;
-      font-size: 0.8rem;
-      font-weight: 500;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      text-decoration: none;
-      border-radius: 2px;
-      transition: border-color 0.2s, background 0.2s;
-      display: inline-block;
-    }
-    .btn-ghost:hover { border-color: var(--accent); background: rgba(200,169,110,0.08); }
 
-    .hero-scroll {
-      position: absolute;
-      bottom: 40px;
-      right: 48px;
+    /* ── MOBILE MENU ── */
+    #mob-menu {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 105;
+      background: rgba(10,10,10,0.97);
+      backdrop-filter: blur(12px);
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s;
+    }
+    #mob-menu.open { opacity: 1; pointer-events: auto; }
+    #mob-menu ul {
+      list-style: none;
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 8px;
-      color: var(--muted);
-      font-size: 0.65rem;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-      opacity: 0;
-      animation: fadeIn 1s ease 1.4s forwards;
+      gap: 14px;
     }
-    .hero-scroll::after {
-      content: '';
-      width: 1px;
-      height: 60px;
-      background: linear-gradient(to bottom, var(--muted), transparent);
-    }
-
-    /* ── MARQUEE STRIP ── */
-    .marquee-strip {
-      background: var(--accent);
-      padding: 13px 0;
-      overflow: hidden;
-      white-space: nowrap;
-    }
-    .marquee-track {
-      display: inline-flex;
-      animation: marquee 22s linear infinite;
-    }
-    .marquee-track span {
-      font-family: 'Bebas Neue', cursive;
-      font-size: 0.95rem;
-      letter-spacing: 3px;
-      color: var(--bg);
-      padding: 0 32px;
-    }
-    .marquee-track .dot {
-      font-size: 0.5rem;
-      vertical-align: middle;
-      opacity: 0.5;
-    }
-
-    /* ── SECTION BASE ── */
-    section { padding: 100px 48px; }
-    .section-label {
-      font-size: 0.68rem;
-      letter-spacing: 4px;
-      text-transform: uppercase;
-      color: var(--accent);
-      font-weight: 600;
-      margin-bottom: 16px;
-      display: block;
-    }
-    .section-title {
-      font-family: 'Bebas Neue', cursive;
-      font-size: clamp(2.5rem, 6vw, 5rem);
-      letter-spacing: 2px;
-      color: var(--white);
-      line-height: 1;
-      margin-bottom: 20px;
-    }
-    .section-body {
-      color: var(--muted);
-      max-width: 520px;
-      line-height: 1.8;
-      font-size: 0.95rem;
-    }
-
-    /* ── ABOUT ── */
-    #about {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 80px;
-      align-items: center;
-      max-width: 1300px;
-      margin: 0 auto;
-    }
-    .about-image {
-      position: relative;
-    }
-    .about-image img {
-      width: 100%;
-      height: 580px;
-      object-fit: cover;
-      display: block;
-      filter: grayscale(20%);
-    }
-    .about-image::before {
-      content: '';
-      position: absolute;
-      top: -16px; left: -16px;
-      width: 60%;
-      height: 60%;
-      border: 1px solid var(--accent);
-      z-index: -1;
-      opacity: 0.4;
-    }
-    .about-badge {
-      position: absolute;
-      bottom: -20px;
-      right: -20px;
-      background: var(--accent);
-      color: var(--bg);
-      padding: 20px 24px;
-      text-align: center;
-    }
-    .about-badge .num {
-      font-family: 'Bebas Neue', cursive;
-      font-size: 2.4rem;
-      line-height: 1;
-      display: block;
-    }
-    .about-badge .lbl {
-      font-size: 0.65rem;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      font-weight: 600;
-    }
-    .about-text .section-body { max-width: 100%; margin-bottom: 24px; }
-    .about-stats {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 24px;
-      margin-top: 40px;
-      border-top: 1px solid var(--border);
-      padding-top: 40px;
-    }
-    .stat-item .num {
-      font-family: 'Bebas Neue', cursive;
-      font-size: 2.4rem;
-      color: var(--accent);
-      line-height: 1;
-    }
-    .stat-item .lbl {
-      font-size: 0.78rem;
-      color: var(--muted);
-      letter-spacing: 1px;
-      margin-top: 4px;
-    }
-    .social-handle {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      color: var(--accent);
+    #mob-menu ul a {
+      font-size: 1.15rem;
+      color: var(--off);
       text-decoration: none;
-      font-size: 0.85rem;
-      font-weight: 500;
-      margin-top: 28px;
-      border-bottom: 1px solid transparent;
-      transition: border-color 0.2s;
-    }
-    .social-handle:hover { border-bottom-color: var(--accent); }
-
-    /* ── GALLERY ── */
-    #gallery {
-      background: var(--surface);
-      max-width: 100%;
-    }
-    #gallery .gallery-header {
-      max-width: 1300px;
-      margin: 0 auto 56px;
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-end;
-    }
-    .gallery-grid {
-      max-width: 1300px;
-      margin: 0 auto;
-      columns: 3;
-      column-gap: 12px;
-    }
-    .gallery-item {
-      break-inside: avoid;
-      margin-bottom: 12px;
-      overflow: hidden;
-      position: relative;
-      cursor: pointer;
-    }
-    .gallery-item img {
-      width: 100%;
+      letter-spacing: 0.1em;
+      padding: 10px 24px;
+      background: rgba(255,255,255,0.06);
+      backdrop-filter: blur(6px);
+      border-radius: 8px;
       display: block;
-      transition: transform 0.5s ease, filter 0.5s ease;
-      filter: grayscale(15%);
     }
-    .gallery-item:hover img { transform: scale(1.04); filter: grayscale(0%); }
-    .gallery-item::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(to top, rgba(0,0,0,0.5) 0%, transparent 50%);
+
+    /* ── FLOATING CTA (Ganga's bottom-right pill that slides up) ── */
+    #float-cta {
+      position: fixed;
+      bottom: 26px;
+      right: 26px;
+      z-index: 100;
       opacity: 0;
-      transition: opacity 0.3s;
+      transform: translateY(70px);
+      pointer-events: none;
+      transition: opacity 0.45s ease, transform 0.45s ease;
     }
-    .gallery-item:hover::after { opacity: 1; }
-    .gallery-label {
-      position: absolute;
-      bottom: 16px;
-      left: 16px;
-      z-index: 2;
-      font-size: 0.7rem;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      color: rgba(255,255,255,0.85);
-      opacity: 0;
-      transition: opacity 0.3s;
-    }
-    .gallery-item:hover .gallery-label { opacity: 1; }
-
-    /* Brad's real work section */
-    #real-work {
-      max-width: 1300px;
-      margin: 0 auto;
-    }
-    #real-work .rw-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-end;
-      margin-bottom: 48px;
-    }
-    .rw-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 3px;
-    }
-    .rw-item {
-      aspect-ratio: 1;
-      overflow: hidden;
-      position: relative;
-      background: var(--surface2);
-      cursor: pointer;
-    }
-    .rw-item img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      transition: transform 0.5s ease;
-      filter: grayscale(10%);
-    }
-    .rw-item:hover img { transform: scale(1.07); filter: none; }
-    .rw-overlay {
-      position: absolute;
-      inset: 0;
-      background: rgba(0,0,0,0.55);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      opacity: 0;
-      transition: opacity 0.3s;
-    }
-    .rw-item:hover .rw-overlay { opacity: 1; }
-    .rw-overlay svg { width: 32px; height: 32px; fill: none; stroke: #fff; stroke-width: 1.5; }
-
-    /* ── STYLES ── */
-    #styles { max-width: 1300px; margin: 0 auto; }
-    .styles-header { margin-bottom: 56px; }
-    .styles-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 2px;
-    }
-    .style-card {
-      background: var(--surface);
-      padding: 40px 36px;
-      border: 1px solid var(--border);
-      transition: border-color 0.3s, background 0.3s;
-      cursor: default;
-    }
-    .style-card:hover {
-      border-color: var(--accent);
-      background: var(--surface2);
-    }
-    .style-num {
-      font-family: 'Bebas Neue', cursive;
-      font-size: 3rem;
-      color: var(--border);
-      line-height: 1;
-      margin-bottom: 20px;
-      transition: color 0.3s;
-    }
-    .style-card:hover .style-num { color: var(--accent); }
-    .style-name {
-      font-family: 'Bebas Neue', cursive;
-      font-size: 1.6rem;
-      letter-spacing: 2px;
-      color: var(--white);
-      margin-bottom: 12px;
-    }
-    .style-desc {
-      font-size: 0.85rem;
-      color: var(--muted);
-      line-height: 1.7;
-    }
-
-    /* ── WALKIN STRIP ── */
-    #walkin {
-      background: var(--white);
-      padding: 80px 48px;
-      text-align: center;
-    }
-    #walkin .wi-label {
-      font-size: 0.72rem;
-      letter-spacing: 4px;
-      text-transform: uppercase;
-      color: var(--muted);
-      font-weight: 600;
-      margin-bottom: 20px;
-    }
-    #walkin .wi-title {
-      font-family: 'Bebas Neue', cursive;
-      font-size: clamp(3rem, 8vw, 7rem);
-      color: var(--bg);
-      line-height: 0.9;
-      letter-spacing: 3px;
-      margin-bottom: 28px;
-    }
-    #walkin .wi-title em {
-      font-family: 'Playfair Display', serif;
-      font-style: italic;
-      color: var(--accent2);
-    }
-    #walkin .wi-sub {
-      font-size: 1rem;
-      color: #555;
-      max-width: 460px;
-      margin: 0 auto 36px;
-      line-height: 1.7;
-    }
-    #walkin .btn-dark {
-      background: var(--bg);
-      color: var(--white);
-      padding: 16px 44px;
-      font-size: 0.8rem;
-      font-weight: 600;
-      letter-spacing: 2.5px;
-      text-transform: uppercase;
-      text-decoration: none;
-      border-radius: 2px;
-      display: inline-block;
-      transition: background 0.2s, transform 0.2s;
-    }
-    #walkin .btn-dark:hover { background: #222; transform: translateY(-2px); }
-    .price-pills {
-      display: flex;
-      gap: 16px;
-      justify-content: center;
-      margin-top: 40px;
-      flex-wrap: wrap;
-    }
-    .pill {
-      border: 1px solid #ddd;
-      border-radius: 100px;
-      padding: 8px 20px;
-      font-size: 0.78rem;
-      color: #444;
-      letter-spacing: 1px;
-    }
-    .pill strong { color: var(--bg); }
-
-    /* ── CONTACT ── */
-    #contact {
-      background: var(--surface);
-      padding: 100px 48px;
-    }
-    .contact-inner {
-      max-width: 1300px;
-      margin: 0 auto;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 80px;
-    }
-    .contact-info .section-body { margin-bottom: 48px; }
-    .info-row {
-      display: flex;
-      gap: 16px;
-      align-items: flex-start;
-      margin-bottom: 28px;
-    }
-    .info-icon {
-      width: 40px;
-      height: 40px;
-      background: var(--surface2);
-      border: 1px solid var(--border);
-      border-radius: 4px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-      color: var(--accent);
-      font-size: 1rem;
-    }
-    .info-label {
-      font-size: 0.68rem;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      color: var(--muted);
-      margin-bottom: 4px;
-    }
-    .info-value {
-      color: var(--white);
-      font-size: 0.95rem;
-      font-weight: 400;
-    }
-    .info-value a { color: var(--white); text-decoration: none; }
-    .info-value a:hover { color: var(--accent); }
-    .map-wrap {
-      position: relative;
-    }
-    .map-wrap iframe {
-      width: 100%;
-      height: 100%;
-      min-height: 420px;
-      border: 0;
-      display: block;
-      filter: grayscale(80%) contrast(1.1) invert(0.92);
-      opacity: 0.85;
-      transition: filter 0.3s, opacity 0.3s;
-    }
-    .map-wrap:hover iframe {
-      filter: grayscale(30%) contrast(1.1);
+    #float-cta.show {
       opacity: 1;
+      transform: translateY(0);
+      pointer-events: auto;
     }
-    .map-label {
+
+    /* ── HERO (exact Ganga structure) ── */
+    #hero {
+      position: relative;
+      width: 100%;
+      height: 100vh;
+      overflow: hidden;
+    }
+    .hero-img {
       position: absolute;
-      top: 16px;
-      left: 16px;
-      background: var(--bg);
-      color: var(--accent);
-      font-size: 0.7rem;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      font-weight: 600;
-      padding: 8px 14px;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: opacity 0.7s ease-in-out;
+    }
+    .hero-img.on  { opacity: 1; }
+    .hero-img.off { opacity: 0; }
+
+    /* bottom-to-top gradient, matches Ganga's from-black/85 to-90% */
+    .hero-veil {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top,rgba(0,0,0,0.88) 0%,rgba(0,0,0,0.18) 60%,transparent 90%);
+      z-index: 1;
       pointer-events: none;
     }
 
-    /* ── BOOK FORM ── */
-    .book-form {
+    /* slideshow dots — bottom center, Ganga puts them at bottom-42/bottom-60 */
+    #hero-dots {
+      position: absolute;
+      bottom: 140px;
+      left: 50%;
+      transform: translateX(-50%);
       display: flex;
-      flex-direction: column;
-      gap: 16px;
+      gap: 8px;
+      z-index: 10;
     }
-    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-    .form-group { display: flex; flex-direction: column; gap: 8px; }
-    .form-group label {
-      font-size: 0.7rem;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      color: var(--muted);
-      font-weight: 500;
-    }
-    .form-group input,
-    .form-group select,
-    .form-group textarea {
-      background: var(--surface2);
-      border: 1px solid var(--border);
-      color: var(--white);
-      padding: 13px 16px;
-      font-family: 'Inter', sans-serif;
-      font-size: 0.9rem;
-      border-radius: 2px;
-      outline: none;
-      transition: border-color 0.2s;
-    }
-    .form-group input:focus,
-    .form-group select:focus,
-    .form-group textarea:focus { border-color: var(--accent); }
-    .form-group select option { background: var(--surface2); }
-    .form-group textarea { resize: vertical; min-height: 100px; }
-    .form-note {
-      font-size: 0.78rem;
-      color: var(--muted);
-      line-height: 1.6;
-    }
-    .form-note a { color: var(--accent); }
-    .btn-submit {
-      background: var(--accent);
-      color: var(--bg);
-      padding: 15px;
-      font-size: 0.8rem;
-      font-weight: 600;
-      letter-spacing: 2px;
-      text-transform: uppercase;
+    .dot {
+      width: 4px; height: 4px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.35);
       border: none;
-      border-radius: 2px;
       cursor: pointer;
-      transition: background 0.2s, transform 0.2s;
-      font-family: 'Inter', sans-serif;
+      transition: all 0.3s;
+      padding: 0;
     }
-    .btn-submit:hover { background: #e0be86; transform: translateY(-1px); }
+    .dot.on { background: #fff; transform: scale(1.4); }
+
+    /* Large title at bottom of hero — Ganga's SVG text translated to Antonio font */
+    .hero-title-block {
+      position: absolute;
+      bottom: 56px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 10;
+      text-align: center;
+      width: 88%;
+    }
+    .hero-title-main {
+      display: block;
+      font-family: 'Antonio', sans-serif;
+      font-size: clamp(4.5rem, 14vw, 13rem);
+      font-weight: 700;
+      color: var(--off);
+      line-height: 0.82;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+    }
+    .hero-title-sub {
+      display: block;
+      font-family: 'Antonio', sans-serif;
+      font-size: clamp(0.85rem, 2.5vw, 1.8rem);
+      font-weight: 300;
+      color: rgba(240,240,240,0.55);
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      margin-top: 10px;
+    }
+
+    /* ── ARTISTS SECTION ── */
+    #artists {
+      position: relative;
+      padding: 72px 26px 56px;
+      text-align: center;
+      overflow: hidden;
+    }
+    /* color-blur decorative blob — copies Ganga's color-blur.webp effect */
+    .color-blob {
+      position: absolute;
+      pointer-events: none;
+      border-radius: 50%;
+      filter: blur(80px);
+    }
+    .blob-1 {
+      width: 600px; height: 400px;
+      background: radial-gradient(ellipse,rgba(100,60,180,0.18) 0%,rgba(180,60,100,0.1) 60%,transparent 100%);
+      top: 50%; left: 50%;
+      transform: translate(-50%,-55%) rotate(45deg);
+    }
+
+    .section-h2 {
+      font-family: 'Antonio', sans-serif;
+      font-size: clamp(1.8rem, 4.5vw, 3.2rem);
+      font-weight: 400;
+      letter-spacing: 0.06em;
+      color: var(--off);
+      position: relative;
+      z-index: 1;
+      margin-bottom: 10px;
+    }
+    .section-p {
+      font-size: 12px;
+      color: var(--grey2);
+      letter-spacing: 0.04em;
+      text-transform: none;
+      line-height: 1.65;
+      max-width: 500px;
+      margin: 0 auto 36px;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Artist grid — Ganga uses responsive columns */
+    #artists-grid {
+      display: grid;
+      grid-template-columns: repeat(3,1fr);
+      max-width: 1180px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Artist card — exact Ganga structure */
+    .acard {
+      display: block;
+      text-decoration: none;
+      color: var(--off);
+      position: relative;
+      cursor: pointer;
+      overflow: hidden;
+    }
+    .acard-carousel-wrap { position: relative; }
+
+    /* Horizontal scroll snap carousel — Ganga's exact approach */
+    .acard-carousel {
+      display: flex;
+      overflow-x: scroll;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+    }
+    .acard-carousel::-webkit-scrollbar { display: none; }
+    .acard-carousel img {
+      width: 100%;
+      flex-shrink: 0;
+      scroll-snap-align: center;
+      aspect-ratio: 4/5;
+      object-fit: cover;
+      pointer-events: none;
+      user-select: none;
+      -webkit-user-drag: none;
+    }
+
+    /* "Tap to discover" top overlay — hidden until hover */
+    .acard-tap {
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      padding: 14px 12px 40px;
+      background: linear-gradient(to bottom,rgba(0,0,0,0.68),transparent);
+      opacity: 0;
+      transition: opacity 0.3s;
+      pointer-events: none;
+      z-index: 5;
+    }
+    .acard-tap p {
+      font-size: 11px;
+      color: rgba(255,255,255,0.8);
+      text-align: center;
+      letter-spacing: 0.05em;
+      text-transform: none;
+    }
+    .acard:hover .acard-tap { opacity: 1; }
+
+    /* Progress bar at bottom of image */
+    .acard-progress {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 2px;
+      background: rgba(255,255,255,0.08);
+      z-index: 5;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .acard:hover .acard-progress { opacity: 1; }
+    .acard-progress-fill {
+      height: 100%;
+      background: rgba(255,255,255,0.65);
+      width: 25%;
+      transition: width 0.25s ease;
+    }
+
+    /* Artist info below card */
+    .acard-info {
+      padding: 9px 6px 22px;
+      text-align: center;
+    }
+    .acard-style {
+      font-size: 11px;
+      color: var(--grey2);
+      letter-spacing: 0.04em;
+      text-transform: none;
+      margin-bottom: 3px;
+    }
+    .acard-name {
+      font-family: 'Antonio', sans-serif;
+      font-size: clamp(1rem, 2.2vw, 1.75rem);
+      font-weight: 400;
+      letter-spacing: 0.07em;
+    }
+
+    /* dimmed "coming soon" placeholders */
+    .acard-ghost {
+      opacity: 0.22;
+      pointer-events: none;
+    }
+    .ghost-img {
+      aspect-ratio: 4/5;
+      background: var(--coal2);
+      border: 1px solid var(--border);
+    }
+
+    /* ── GALLERY ── */
+    #gallery {
+      padding: 72px 26px;
+      border-top: 1px solid var(--border);
+    }
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(3,1fr);
+      gap: 2px;
+      max-width: 1180px;
+      margin: 36px auto 0;
+    }
+    .gallery-item {
+      overflow: hidden;
+      position: relative;
+    }
+    .gallery-item img {
+      width: 100%;
+      aspect-ratio: 1;
+      object-fit: cover;
+      transition: transform 0.55s ease, filter 0.45s ease;
+      filter: grayscale(12%);
+    }
+    .gallery-item:hover img { transform: scale(1.05); filter: none; }
+    .gallery-link {
+      display: block;
+      text-align: center;
+      margin-top: 28px;
+      font-size: 11px;
+      color: var(--grey2);
+      letter-spacing: 0.07em;
+      text-decoration: none;
+      border-bottom: 1px solid rgba(240,240,240,0.15);
+      display: inline-block;
+      padding-bottom: 2px;
+      text-transform: none;
+    }
+    .gallery-link:hover { color: var(--off); }
+    .gallery-center { text-align: center; }
+
+    /* ── STYLES ── */
+    #styles {
+      padding: 72px 26px;
+      border-top: 1px solid var(--border);
+      text-align: center;
+    }
+    .styles-track {
+      display: flex;
+      overflow-x: auto;
+      gap: 2px;
+      max-width: 1180px;
+      margin: 36px auto 0;
+      scrollbar-width: none;
+      cursor: grab;
+    }
+    .styles-track::-webkit-scrollbar { display: none; }
+    .scard {
+      flex: 0 0 260px;
+      background: var(--coal2);
+      border: 1px solid var(--border);
+      padding: 32px 26px;
+      text-align: left;
+      transition: border-color 0.3s;
+    }
+    .scard:hover { border-color: rgba(240,240,240,0.3); }
+    .scard-num {
+      font-family: 'Antonio', sans-serif;
+      font-size: 2.2rem;
+      color: rgba(240,240,240,0.12);
+      line-height: 1;
+      margin-bottom: 14px;
+      transition: color 0.3s;
+    }
+    .scard:hover .scard-num { color: rgba(240,240,240,0.3); }
+    .scard-name {
+      font-family: 'Antonio', sans-serif;
+      font-size: 1.3rem;
+      letter-spacing: 0.07em;
+      margin-bottom: 10px;
+    }
+    .scard-desc {
+      font-size: 11px;
+      color: var(--grey2);
+      line-height: 1.75;
+      letter-spacing: 0.03em;
+      text-transform: none;
+    }
+
+    /* ── CONTACT ── */
+    #contact {
+      padding: 72px 26px;
+      border-top: 1px solid var(--border);
+    }
+    .contact-wrap {
+      max-width: 1180px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+    }
+    .contact-h2 {
+      font-family: 'Antonio', sans-serif;
+      font-size: clamp(2.5rem, 5vw, 4.5rem);
+      font-weight: 400;
+      letter-spacing: 0.05em;
+      line-height: 0.88;
+      margin-bottom: 18px;
+    }
+    .contact-desc {
+      font-size: 11px;
+      color: var(--grey2);
+      line-height: 1.8;
+      text-transform: none;
+      max-width: 360px;
+      margin-bottom: 36px;
+    }
+    .c-row { margin-bottom: 18px; }
+    .c-label {
+      font-size: 9px;
+      letter-spacing: 0.14em;
+      color: var(--grey);
+      margin-bottom: 4px;
+    }
+    .c-val { font-size: 13px; letter-spacing: 0.04em; }
+    .c-val a { color: var(--off); text-decoration: none; }
+    .c-val a:hover { opacity: 0.65; }
+    .map-frame {
+      width: 100%;
+      height: 420px;
+      border: 0;
+      filter: grayscale(90%) contrast(1.1) invert(0.9);
+      opacity: 0.72;
+      transition: filter 0.3s, opacity 0.3s;
+    }
+    .map-frame:hover { filter: grayscale(25%); opacity: 1; }
 
     /* ── FOOTER ── */
     footer {
-      background: var(--bg);
+      padding: 48px 26px;
       border-top: 1px solid var(--border);
-      padding: 60px 48px;
     }
-    .footer-inner {
-      max-width: 1300px;
+    .footer-grid {
+      max-width: 1180px;
       margin: 0 auto;
       display: grid;
-      grid-template-columns: 2fr 1fr 1fr;
-      gap: 60px;
+      grid-template-columns: 1.8fr 1fr 1fr;
+      gap: 48px;
     }
-    .footer-brand .logo {
-      font-family: 'Bebas Neue', cursive;
-      font-size: 1.8rem;
-      letter-spacing: 3px;
-      color: var(--white);
-      margin-bottom: 12px;
+    .footer-logo {
+      font-family: 'Antonio', sans-serif;
+      font-size: 1.4rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      margin-bottom: 10px;
     }
-    .footer-brand .logo span { color: var(--accent); }
-    .footer-brand p {
-      color: var(--muted);
-      font-size: 0.85rem;
-      line-height: 1.7;
-      max-width: 280px;
-      margin-bottom: 24px;
+    .footer-body {
+      font-size: 11px;
+      color: var(--grey);
+      line-height: 1.75;
+      text-transform: none;
+      max-width: 260px;
+      margin-bottom: 18px;
     }
-    .social-links { display: flex; gap: 12px; }
-    .social-link {
-      width: 38px;
-      height: 38px;
+    .footer-socials { display: flex; gap: 10px; }
+    .fsoc {
+      width: 30px; height: 30px;
       border: 1px solid var(--border);
       border-radius: 4px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: var(--muted);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--grey2);
       text-decoration: none;
-      font-size: 0.85rem;
-      transition: border-color 0.2s, color 0.2s, background 0.2s;
+      transition: border-color 0.2s, color 0.2s;
     }
-    .social-link:hover {
-      border-color: var(--accent);
-      color: var(--accent);
-      background: rgba(200,169,110,0.08);
-    }
+    .fsoc:hover { border-color: rgba(240,240,240,0.35); color: var(--off); }
     .footer-col h4 {
-      font-size: 0.7rem;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-      color: var(--accent);
-      font-weight: 600;
-      margin-bottom: 20px;
+      font-size: 9px;
+      letter-spacing: 0.16em;
+      color: var(--grey);
+      font-weight: 500;
+      margin-bottom: 14px;
     }
     .footer-col ul { list-style: none; }
-    .footer-col ul li {
-      font-size: 0.88rem;
-      color: var(--muted);
-      margin-bottom: 10px;
-      line-height: 1.5;
+    .footer-col ul li { margin-bottom: 8px; }
+    .footer-col ul li,
+    .footer-col ul li a {
+      font-size: 11px;
+      color: var(--grey2);
+      letter-spacing: 0.04em;
+      text-transform: none;
+      text-decoration: none;
     }
-    .footer-col ul li a { color: var(--muted); text-decoration: none; }
-    .footer-col ul li a:hover { color: var(--accent); }
+    .footer-col ul li a:hover { color: var(--off); }
     .footer-bottom {
-      max-width: 1300px;
-      margin: 40px auto 0;
-      padding-top: 24px;
+      max-width: 1180px;
+      margin: 28px auto 0;
+      padding-top: 18px;
       border-top: 1px solid var(--border);
       display: flex;
       justify-content: space-between;
+    }
+    .footer-bottom p, .footer-bottom a {
+      font-size: 10px;
+      color: rgba(240,240,240,0.18);
+      text-transform: none;
+      text-decoration: none;
+      letter-spacing: 0.05em;
+    }
+
+    /* ── BOOKING FORM MODAL (Ganga uses a sliding overlay form) ── */
+    #form-modal {
+      position: fixed;
+      inset: 0;
+      z-index: 200;
+      display: none;
       align-items: center;
+      justify-content: center;
+      padding: 20px;
     }
-    .footer-bottom p { font-size: 0.78rem; color: #444; }
-    .footer-bottom a { color: var(--accent); text-decoration: none; }
+    #form-modal.open { display: flex; }
+    #form-modal::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,0.82);
+      backdrop-filter: blur(10px);
+    }
+    .form-box {
+      background: var(--coal2);
+      border: 1px solid var(--border);
+      width: 100%;
+      max-width: 540px;
+      max-height: 92vh;
+      overflow-y: auto;
+      padding: 36px 32px;
+      position: relative;
+      z-index: 1;
+    }
+    .form-close {
+      position: absolute;
+      top: 14px; right: 18px;
+      background: none; border: none;
+      color: var(--grey2); font-size: 1.3rem;
+      cursor: pointer; line-height: 1;
+    }
+    .form-close:hover { color: var(--off); }
+    .form-h {
+      font-family: 'Antonio', sans-serif;
+      font-size: 2rem;
+      font-weight: 400;
+      letter-spacing: 0.1em;
+      margin-bottom: 6px;
+    }
+    .form-sub {
+      font-size: 10px;
+      color: var(--grey2);
+      text-transform: none;
+      letter-spacing: 0.05em;
+      margin-bottom: 28px;
+    }
+    .fg { margin-bottom: 20px; }
+    .fg label {
+      display: block;
+      font-size: 9px;
+      letter-spacing: 0.14em;
+      color: var(--grey);
+      margin-bottom: 6px;
+    }
+    .fg input, .fg select, .fg textarea {
+      width: 100%;
+      background: transparent;
+      border: none;
+      border-bottom: 1px solid rgba(240,240,240,0.1);
+      color: var(--off);
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+      font-weight: 300;
+      letter-spacing: 0.03em;
+      padding: 7px 4px;
+      outline: none;
+      text-transform: none;
+      transition: border-color 0.2s;
+    }
+    .fg input::placeholder { color: rgba(240,240,240,0.25); }
+    .fg input:focus, .fg select:focus, .fg textarea:focus {
+      border-bottom-color: rgba(240,240,240,0.45);
+    }
+    .fg select option { background: var(--coal2); }
+    .fg textarea { resize: vertical; min-height: 72px; }
+    .fg-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .btn-form-submit {
+      width: 100%;
+      margin-top: 6px;
+      background: rgba(240,240,240,0.08);
+      border: 1px solid rgba(240,240,240,0.4);
+      color: var(--off);
+      font-family: 'Inter', sans-serif;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 11px;
+      cursor: pointer;
+      border-radius: 5px;
+      transition: background 0.2s;
+    }
+    .btn-form-submit:hover { background: rgba(240,240,240,0.18); }
 
-    /* ── ANIMATIONS ── */
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(24px); }
-      to   { opacity: 1; transform: translateY(0); }
+    /* ── RESPONSIVE ── */
+    @media (max-width: 1024px) {
+      .header-nav { gap: 30px; }
+      #artists-grid { grid-template-columns: repeat(2,1fr); }
+      .gallery-grid { grid-template-columns: repeat(2,1fr); }
+      .contact-wrap { grid-template-columns: 1fr; gap: 40px; }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
     }
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to   { opacity: 1; }
+    @media (max-width: 768px) {
+      .header-row { display: none; }
+      #ham-btn { display: flex; }
+      #mob-menu { display: flex; }
+      #mob-book { display: block; }
+      #artists-grid { grid-template-columns: repeat(2,1fr); }
+      .gallery-grid { grid-template-columns: repeat(2,1fr); }
+      .footer-grid { grid-template-columns: 1fr; }
+      .fg-row { grid-template-columns: 1fr; }
     }
-    @keyframes marquee {
-      from { transform: translateX(0); }
-      to   { transform: translateX(-50%); }
-    }
-
-    .reveal {
-      opacity: 0;
-      transform: translateY(30px);
-      transition: opacity 0.7s ease, transform 0.7s ease;
-    }
-    .reveal.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-    .reveal-delay-1 { transition-delay: 0.1s; }
-    .reveal-delay-2 { transition-delay: 0.2s; }
-    .reveal-delay-3 { transition-delay: 0.3s; }
-    .reveal-delay-4 { transition-delay: 0.4s; }
-
-    /* ── MOBILE ── */
-    @media (max-width: 900px) {
-      nav { padding: 16px 24px; }
-      nav.scrolled { padding: 12px 24px; }
-      .nav-links { gap: 20px; }
-      .nav-phone, .nav-links li:nth-child(1), .nav-links li:nth-child(2) { display: none; }
-      #hero .hero-content { padding: 0 24px 60px; }
-      .hero-scroll { right: 24px; }
-      section { padding: 72px 24px; }
-      #about { grid-template-columns: 1fr; gap: 48px; }
-      .about-image img { height: 400px; }
-      .gallery-grid { columns: 2; }
-      .rw-grid { grid-template-columns: repeat(2, 1fr); }
-      .styles-grid { grid-template-columns: 1fr 1fr; }
-      .contact-inner { grid-template-columns: 1fr; gap: 40px; }
-      .footer-inner { grid-template-columns: 1fr 1fr; }
-      .footer-brand { grid-column: 1 / -1; }
-      .form-row { grid-template-columns: 1fr; }
-      #gallery .gallery-header { flex-direction: column; align-items: flex-start; gap: 16px; }
-    }
-    @media (max-width: 600px) {
-      .gallery-grid { columns: 1; }
-      .styles-grid { grid-template-columns: 1fr; }
-      .rw-grid { grid-template-columns: repeat(2, 1fr); }
-      .footer-inner { grid-template-columns: 1fr; }
-      .hero-actions { flex-direction: column; align-items: flex-start; }
+    @media (max-width: 480px) {
+      #artists-grid { grid-template-columns: 1fr; }
+      .gallery-grid { grid-template-columns: 1fr; }
+      .hero-title-main { font-size: clamp(3.5rem,18vw,6rem); }
     }
   </style>
 </head>
 <body>
 
-<!-- ── NAV ────────────────────────────────────────────────── -->
-<nav id="nav">
-  <a href="#hero" class="nav-logo">STAIN'D <span>INK</span></a>
-  <ul class="nav-links">
-    <li><a href="#gallery">Work</a></li>
-    <li><a href="#styles">Styles</a></li>
-    <li><a href="#about">Artist</a></li>
-    <li><a href="tel:5412812993" class="nav-phone">(541) 281-2993</a></li>
-  </ul>
-</nav>
-
-<!-- ── HERO ───────────────────────────────────────────────── -->
-<section id="hero">
-  <div class="hero-bg"></div>
-  <div class="hero-gradient"></div>
-  <div class="hero-content">
-    <p class="hero-eyebrow">Klamath Falls, Oregon &nbsp;·&nbsp; Walk-Ins Welcome</p>
-    <h1 class="hero-title">
-      Art You<br>
-      <em>Wear.</em>
-    </h1>
-    <p class="hero-sub">Custom tattoo work by Brad Mejia. Traditional, black & grey, realism, and everything in between — built to last a lifetime.</p>
-    <div class="hero-actions">
-      <a href="#gallery" class="btn-primary">View the Work</a>
-    </div>
-  </div>
-  <div class="hero-scroll">Scroll</div>
-</section>
-
-<!-- ── MARQUEE ────────────────────────────────────────────── -->
-<div class="marquee-strip">
-  <div class="marquee-track">
-    <span>Walk-Ins Welcome Daily</span><span class="dot">◆</span>
-    <span>Custom Tattoos</span><span class="dot">◆</span>
-    <span>Flash From $10</span><span class="dot">◆</span>
-    <span>Brad Mejia — Artist & Owner</span><span class="dot">◆</span>
-    <span>Klamath Falls, OR</span><span class="dot">◆</span>
-    <span>Traditional · Black & Grey · Realism · Neo-Trad</span><span class="dot">◆</span>
-    <span>Walk-Ins Welcome Daily</span><span class="dot">◆</span>
-    <span>Custom Tattoos</span><span class="dot">◆</span>
-    <span>Flash From $10</span><span class="dot">◆</span>
-    <span>Brad Mejia — Artist & Owner</span><span class="dot">◆</span>
-    <span>Klamath Falls, OR</span><span class="dot">◆</span>
-    <span>Traditional · Black & Grey · Realism · Neo-Trad</span><span class="dot">◆</span>
-  </div>
+<!-- ── FIXED LOGO ── -->
+<div id="site-logo">
+  <a href="#">STAIN'D INK</a>
 </div>
 
-<!-- ── ABOUT ───────────────────────────────────────────────── -->
-<section>
-  <div id="about">
-    <div class="about-image reveal">
-      <img
-        src="https://images.unsplash.com/photo-1597852075234-fd721ac361d3?w=900&q=85&fit=crop"
-        alt="Brad Mejia tattooing a client"
-        loading="lazy"
-      />
-      <div class="about-badge">
-        <span class="num">1K</span>
-        <span class="lbl">Posts of Work</span>
-      </div>
-    </div>
-    <div class="about-text reveal reveal-delay-2">
-      <span class="section-label">The Artist</span>
-      <h2 class="section-title">Brad<br>Mejia</h2>
-      <p class="section-body">Owner and sole artist at Stain'd INK, Brad Mejia has spent years mastering a range of tattoo styles — from bold American Traditional to intricate black & grey realism. Every piece is built to your vision, crafted with intention, and meant to age beautifully.</p>
-      <p class="section-body" style="margin-top:16px;">"He listened to what I wanted and made it happen." — Allison H.</p>
-      <a href="https://instagram.com/mejia.ink" target="_blank" class="social-handle">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.5" fill="currentColor"/></svg>
-        @mejia.ink
-      </a>
-      <div class="about-stats">
-        <div class="stat-item">
-          <div class="num">5.0</div>
-          <div class="lbl">Star Rating</div>
-        </div>
-        <div class="stat-item">
-          <div class="num">$10+</div>
-          <div class="lbl">Flash Pieces</div>
-        </div>
-        <div class="stat-item">
-          <div class="num">6+</div>
-          <div class="lbl">Styles Mastered</div>
-        </div>
-        <div class="stat-item">
-          <div class="num">Daily</div>
-          <div class="lbl">Walk-Ins Welcome</div>
-        </div>
-      </div>
-    </div>
+<!-- ── MOBILE BOOK BUTTON ── -->
+<div id="mob-book">
+  <button class="btn-book open-form">Book now</button>
+</div>
+
+<!-- ── HAMBURGER ── -->
+<button id="ham-btn" aria-label="Menu">
+  <span class="ham-line"></span>
+  <span class="ham-line"></span>
+  <span class="ham-line"></span>
+</button>
+
+<!-- ── MOBILE MENU ── -->
+<div id="mob-menu">
+  <ul>
+    <li><a href="#artists" onclick="closeMob()">Artists</a></li>
+    <li><a href="#gallery" onclick="closeMob()">Work</a></li>
+    <li><a href="#styles"  onclick="closeMob()">Styles</a></li>
+    <li><a href="#contact" onclick="closeMob()">Contact</a></li>
+    <li style="margin-top:14px;">
+      <button class="btn-book open-form" onclick="closeMob()">Book now</button>
+    </li>
+  </ul>
+</div>
+
+<!-- ── HEADER ── -->
+<header id="main-header">
+  <div class="header-fade"></div>
+  <div class="header-row">
+    <span class="header-spacer">STAIN'D INK</span>
+    <ul class="header-nav">
+      <li><a href="#artists">Artists</a></li>
+      <li><a href="#gallery">Work</a></li>
+      <li><a href="#styles">Styles</a></li>
+      <li><a href="#contact">Contact</a></li>
+      <li><span id="clock"></span></li>
+    </ul>
+    <button class="btn-book open-form">Book now</button>
+  </div>
+</header>
+
+<!-- ── FLOATING CTA ── -->
+<div id="float-cta">
+  <button class="btn-book open-form" style="font-size:13px;padding:5px 14px;">Book now</button>
+</div>
+
+<!-- ── HERO ── -->
+<section id="hero">
+  <img class="hero-img on"
+       src="https://images.unsplash.com/photo-1568515045052-f9a854d70bfd?w=1800&q=90&fit=crop"
+       alt="Tattoo studio"/>
+  <img class="hero-img off"
+       src="https://images.unsplash.com/photo-1597852075234-fd721ac361d3?w=1800&q=90&fit=crop&crop=focalpoint&fp-x=0.5&fp-y=0.25"
+       alt="Tattoo work"/>
+  <img class="hero-img off"
+       src="https://images.unsplash.com/photo-1605647533135-51b5906087d0?w=1800&q=90&fit=crop"
+       alt="Fine line tattoo"/>
+
+  <div class="hero-veil"></div>
+
+  <div id="hero-dots">
+    <button class="dot on" data-i="0"></button>
+    <button class="dot"    data-i="1"></button>
+    <button class="dot"    data-i="2"></button>
+  </div>
+
+  <!-- Ganga-style large bottom title -->
+  <div class="hero-title-block">
+    <span class="hero-title-main">STAIN'D INK</span>
+    <span class="hero-title-sub">Klamath Falls, Oregon &nbsp;·&nbsp; Walk-Ins Welcome</span>
   </div>
 </section>
 
-<!-- ── GALLERY ─────────────────────────────────────────────── -->
+<!-- ── ARTISTS ── -->
+<section id="artists">
+  <div class="color-blob blob-1"></div>
+
+  <h2 class="section-h2">Meet our artists</h2>
+  <p class="section-p">Custom tattoo work crafted with precision and passion in Klamath Falls, Oregon. Walk-ins welcome daily — flash from $10.</p>
+
+  <div id="artists-grid">
+
+    <!-- Brad Mejia -->
+    <a class="acard" href="https://instagram.com/mejia.ink" target="_blank" data-name="brad">
+      <div class="acard-carousel-wrap">
+        <div class="acard-carousel" id="c-brad">
+          <img src="https://images.unsplash.com/photo-1568515045052-f9a854d70bfd?w=600&q=85&fit=crop" alt="Brad Mejia tattoo"/>
+          <img src="https://images.unsplash.com/photo-1605647533135-51b5906087d0?w=600&q=85&fit=crop" alt="Brad Mejia tattoo"/>
+          <img src="https://images.unsplash.com/photo-1552627019-947c3789ffb5?w=600&q=85&fit=crop" alt="Brad Mejia tattoo"/>
+          <img src="https://images.pexels.com/photos/2126124/pexels-photo-2126124.jpeg?w=600&h=750&fit=crop" alt="Brad Mejia tattoo"/>
+        </div>
+        <div class="acard-tap"><p>Tap to discover</p></div>
+        <div class="acard-progress">
+          <div class="acard-progress-fill" id="p-brad"></div>
+        </div>
+      </div>
+      <div class="acard-info">
+        <p class="acard-style">Traditional · Black &amp; Grey · Realism</p>
+        <h3 class="acard-name">Brad Mejia</h3>
+      </div>
+    </a>
+
+    <!-- Coming soon slots -->
+    <div class="acard acard-ghost">
+      <div class="ghost-img"></div>
+      <div class="acard-info">
+        <p class="acard-style">Guest Artist</p>
+        <h3 class="acard-name">Coming Soon</h3>
+      </div>
+    </div>
+
+    <div class="acard acard-ghost">
+      <div class="ghost-img"></div>
+      <div class="acard-info">
+        <p class="acard-style">Guest Artist</p>
+        <h3 class="acard-name">Coming Soon</h3>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ── GALLERY ── -->
 <section id="gallery">
-  <div class="gallery-header reveal">
-    <div>
-      <span class="section-label">Portfolio</span>
-      <h2 class="section-title">The Work</h2>
-    </div>
-    <a href="https://instagram.com/mejia.ink" target="_blank" class="btn-ghost" style="white-space:nowrap; font-size:0.75rem; padding:12px 24px;">See All on Instagram ↗</a>
-  </div>
+  <h2 class="section-h2">The Work</h2>
+  <p class="section-p">Recent pieces by Brad Mejia. See more on Instagram.</p>
   <div class="gallery-grid">
-    <div class="gallery-item reveal">
-      <img src="https://images.unsplash.com/photo-1568515045052-f9a854d70bfd?w=700&q=85&fit=crop" alt="Tattoo work" loading="lazy"/>
-      <span class="gallery-label">Custom Piece</span>
-    </div>
-    <div class="gallery-item reveal reveal-delay-1">
-      <img src="https://images.unsplash.com/photo-1605647533135-51b5906087d0?w=700&q=85&fit=crop" alt="Tattoo work" loading="lazy"/>
-      <span class="gallery-label">Fine Line</span>
-    </div>
-    <div class="gallery-item reveal reveal-delay-2">
-      <img src="https://images.pexels.com/photos/2126124/pexels-photo-2126124.jpeg?w=700&h=900&fit=crop" alt="Tattoo work" loading="lazy"/>
-      <span class="gallery-label">Black & Grey</span>
-    </div>
-    <div class="gallery-item reveal reveal-delay-1">
-      <img src="https://images.unsplash.com/photo-1552627019-947c3789ffb5?w=700&q=85&fit=crop" alt="Tattoo work" loading="lazy"/>
-      <span class="gallery-label">Traditional</span>
-    </div>
-    <div class="gallery-item reveal reveal-delay-2">
-      <img src="https://images.pexels.com/photos/4125582/pexels-photo-4125582.jpeg?w=700&h=800&fit=crop" alt="Artist at work" loading="lazy"/>
-      <span class="gallery-label">In the Studio</span>
-    </div>
-    <div class="gallery-item reveal reveal-delay-3">
-      <img src="https://images.unsplash.com/photo-1597852075234-fd721ac361d3?w=700&q=85&fit=crop&crop=focalpoint&fp-x=0.5&fp-y=0.3" alt="Tattoo work" loading="lazy"/>
-      <span class="gallery-label">Detail Work</span>
-    </div>
+    <div class="gallery-item"><img src="https://images.unsplash.com/photo-1568515045052-f9a854d70bfd?w=600&q=85&fit=crop" alt="" loading="lazy"/></div>
+    <div class="gallery-item"><img src="https://images.unsplash.com/photo-1605647533135-51b5906087d0?w=600&q=85&fit=crop" alt="" loading="lazy"/></div>
+    <div class="gallery-item"><img src="https://images.pexels.com/photos/2126124/pexels-photo-2126124.jpeg?w=600&h=600&fit=crop" alt="" loading="lazy"/></div>
+    <div class="gallery-item"><img src="https://images.unsplash.com/photo-1552627019-947c3789ffb5?w=600&q=85&fit=crop" alt="" loading="lazy"/></div>
+    <div class="gallery-item"><img src="https://images.pexels.com/photos/4125582/pexels-photo-4125582.jpeg?w=600&h=600&fit=crop" alt="" loading="lazy"/></div>
+    <div class="gallery-item"><img src="https://images.unsplash.com/photo-1597852075234-fd721ac361d3?w=600&q=85&fit=crop&crop=focalpoint&fp-x=0.5&fp-y=0.3" alt="" loading="lazy"/></div>
+  </div>
+  <div class="gallery-center" style="margin-top:28px;">
+    <a class="gallery-link" href="https://instagram.com/mejia.ink" target="_blank">View all work on Instagram → @mejia.ink</a>
   </div>
 </section>
 
-<!-- ── REAL WORK (Brad's Instagram) ──────────────────────── -->
-<section style="padding-top:0;">
-  <div id="real-work">
-    <div class="rw-header reveal">
-      <div>
-        <span class="section-label">Fresh Off the Needle</span>
-        <h2 class="section-title">Recent Work</h2>
-      </div>
-      <a href="https://instagram.com/mejia.ink" target="_blank" class="social-handle">Follow @mejia.ink ↗</a>
-    </div>
-    <div class="rw-grid">
-      <div class="rw-item reveal">
-        <img src="https://scontent-den2-1.cdninstagram.com/v/t51.82787-15/720950278_18093846230527219_2726073319740598083_n.jpg?stp=dst-jpg_e35_s640x640_tt6&_nc_cat=109&ccb=7-5&_nc_sid=18de74&efg=eyJlZmdfdGFnIjoiQ0FST1VTRUxfSVRFTS5iZXN0X2ltYWdlX3VybGdlbi5DMyJ9&_nc_ohc=Or-uP28xLlwQ7kNvwHU2Klq&_nc_zt=23&_nc_ht=scontent-den2-1.cdninstagram.com&oh=00_Af8F9i8nay3lRGYXmpvWwGOZTbcjotqZhE8eousfadmZow&oe=6A30F0F3"
-             alt="Brad Mejia tattoo June 2026"
-             loading="lazy"
-             onerror="this.parentElement.style.display='none'"/>
-        <div class="rw-overlay"><svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.5" fill="#fff" stroke="none"/></svg></div>
-      </div>
-      <div class="rw-item reveal reveal-delay-1">
-        <img src="https://scontent-den2-1.cdninstagram.com/v/t51.71878-15/718697392_4527096800908343_8296450523476713726_n.jpg?stp=dst-jpg_e35_s640x640_tt6&_nc_cat=101&ccb=7-5&_nc_sid=18de74&efg=eyJlZmdfdGFnIjoiQ0xJUFMuYmVzdF9pbWFnZV91cmxnZW4uQzMifQ%3D%3D&_nc_ohc=rpm3YVOUausQ7kNvwHrmF-8&_nc_zt=23&_nc_ht=scontent-den2-1.cdninstagram.com&oh=00_Af8Vyve-zPH18rt4FrNiI4ipswnTAd_0FPkJW88SDgnvaw&oe=6A310108"
-             alt="Brad Mejia tattoo June 2026"
-             loading="lazy"
-             onerror="this.parentElement.style.display='none'"/>
-        <div class="rw-overlay"><svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.5" fill="#fff" stroke="none"/></svg></div>
-      </div>
-      <div class="rw-item reveal reveal-delay-2">
-        <img src="https://scontent-den2-1.cdninstagram.com/v/t51.71878-15/718576677_1966393637329159_1783757895347016375_n.jpg?stp=dst-jpg_e35_s640x640_tt6&_nc_cat=107&ccb=7-5&_nc_sid=18de74&efg=eyJlZmdfdGFujoiQ0xJUFMuYmVzdF9pbWFnZV91cmxnZW4uQzMifQ%3D%3D&_nc_ohc=5Ipn7pch0SoQ7kNvwFsQwr7&_nc_zt=23&_nc_ht=scontent-den2-1.cdninstagram.com&oh=00_Af8P-3CfTzRuZdg39BqkUn_t00C0h8_Rx0QrC3-4qHtd0Q&oe=6A310FDC"
-             alt="Brad Mejia tattoo June 2026"
-             loading="lazy"
-             onerror="this.parentElement.style.display='none'"/>
-        <div class="rw-overlay"><svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.5" fill="#fff" stroke="none"/></svg></div>
-      </div>
-      <div class="rw-item reveal reveal-delay-1">
-        <img src="https://scontent-den2-1.cdninstagram.com/v/t51.71878-15/715059872_1028122450173979_7173862548980345196_n.jpg?stp=dst-jpg_e35_s640x640_tt6&_nc_cat=111&ccb=7-5&_nc_sid=18de74&efg=eyJlZmdfdGFnIjoiQ0xJUFMuYmVzdF9pbWFnZV91cmxnZW4uQzMifQ%3D%3D&_nc_ohc=aTmkfvVXDFkQ7kNvwEMnLxn&_nc_zt=23&_nc_ht=scontent-den2-1.cdninstagram.com&oh=00_Af_wNhYEuy2WsBAbVaD7OoWbYaLkrwGqj7V3GY4ZklRzaQ&oe=6A30FDC3"
-             alt="Brad Mejia tattoo June 2026"
-             loading="lazy"
-             onerror="this.parentElement.style.display='none'"/>
-        <div class="rw-overlay"><svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.5" fill="#fff" stroke="none"/></svg></div>
-      </div>
-      <div class="rw-item reveal reveal-delay-2">
-        <img src="https://scontent-den2-1.cdninstagram.com/v/t51.71878-15/713384239_1479519900852917_6726797030146468407_n.jpg?stp=dst-jpg_e35_s640x640_tt6&_nc_cat=103&ccb=7-5&_nc_sid=18de74&efg=eyJlZmdfdGFnIjoiQ0xJUFMuYmVzdF9pbWFnZV91cmxnZW4uQzMifQ%3D%3D&_nc_ohc=0AWiblR_MYMQ7kNvwGjhR9p&_nc_zt=23&_nc_ht=scontent-den2-1.cdninstagram.com&oh=00_Af9-hiQxJmUNe1pCirGVR7ZWLvZk4s2PH9kEzsnJyKMbWg&oe=6A30F4F2"
-             alt="Brad Mejia tattoo May 2026"
-             loading="lazy"
-             onerror="this.parentElement.style.display='none'"/>
-        <div class="rw-overlay"><svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.5" fill="#fff" stroke="none"/></svg></div>
-      </div>
-      <div class="rw-item reveal reveal-delay-3">
-        <img src="https://scontent-den2-1.cdninstagram.com/v/t51.71878-15/710555387_1367010538820729_5311869601461236077_n.jpg?stp=dst-jpg_e35_s640x640_tt6&_nc_cat=104&ccb=7-5&_nc_sid=18de74&efg=eyJlZmdfdGFujoiQ0xJUFMuYmVzdF9pbWFnZV91cmxnZW4uQzMifQ%3D%3D&_nc_ohc=WUq9AppPqvEQ7kNvwF1vN8K&_nc_zt=23&_nc_ht=scontent-den2-1.cdninstagram.com&oh=00_Af8dDI0B8OaBI1g1D1ZmPm4RFk2_QkKyuNP2rJnP66GThQ&oe=6A30E983"
-             alt="Brad Mejia tattoo June 2026"
-             loading="lazy"
-             onerror="this.parentElement.style.display='none'"/>
-        <div class="rw-overlay"><svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.5" fill="#fff" stroke="none"/></svg></div>
-      </div>
-    </div>
+<!-- ── STYLES ── -->
+<section id="styles">
+  <h2 class="section-h2">Styles</h2>
+  <p class="section-p">Every style mastered by one artist.</p>
+  <div class="styles-track">
+    <div class="scard"><div class="scard-num">01</div><div class="scard-name">American Traditional</div><p class="scard-desc">Bold outlines, classic iconography — sparrows, skulls, scorpions, anchors. Built to look great for decades.</p></div>
+    <div class="scard"><div class="scard-num">02</div><div class="scard-name">Black &amp; Grey</div><p class="scard-desc">Timeless monochrome with smooth gradients and deep contrast. Elegant, dramatic, and built to age beautifully.</p></div>
+    <div class="scard"><div class="scard-num">03</div><div class="scard-name">Neo-Traditional</div><p class="scard-desc">Classic motifs reimagined with modern illustration — rich color palettes and detailed linework.</p></div>
+    <div class="scard"><div class="scard-num">04</div><div class="scard-name">Realism</div><p class="scard-desc">Photorealistic portraits, wildlife, fine-detail pieces that look like they belong in a frame — on your skin.</p></div>
+    <div class="scard"><div class="scard-num">05</div><div class="scard-name">Illustrative</div><p class="scard-desc">Detailed linework and custom illustration-style pieces. Owls, turtles, penguins, everything in between.</p></div>
+    <div class="scard"><div class="scard-num">06</div><div class="scard-name">Custom Flash</div><p class="scard-desc">Walk in, pick a design, walk out tattooed. Pre-drawn flash sheets starting from $10. No appointment needed.</p></div>
   </div>
 </section>
 
-<!-- ── STYLES ──────────────────────────────────────────────── -->
-<section>
-  <div id="styles">
-    <div class="styles-header reveal">
-      <span class="section-label">Specialties</span>
-      <h2 class="section-title">Every Style,<br>One Artist</h2>
-    </div>
-    <div class="styles-grid">
-      <div class="style-card reveal">
-        <div class="style-num">01</div>
-        <div class="style-name">American Traditional</div>
-        <p class="style-desc">Bold outlines, classic iconography — sparrows, skulls, scorpions, anchors. Built to look great for decades.</p>
-      </div>
-      <div class="style-card reveal reveal-delay-1">
-        <div class="style-num">02</div>
-        <div class="style-name">Black & Grey</div>
-        <p class="style-desc">Timeless monochrome work with smooth gradients and deep contrast. Elegant, dramatic, and built to age.</p>
-      </div>
-      <div class="style-card reveal reveal-delay-2">
-        <div class="style-num">03</div>
-        <div class="style-name">Neo-Traditional</div>
-        <p class="style-desc">Classic motifs reimagined with modern illustration techniques — rich color palettes and detailed linework.</p>
-      </div>
-      <div class="style-card reveal reveal-delay-1">
-        <div class="style-num">04</div>
-        <div class="style-name">Realism</div>
-        <p class="style-desc">Photorealistic portraits, wildlife, and fine-detail pieces that look like they belong in a frame — on your skin.</p>
-      </div>
-      <div class="style-card reveal reveal-delay-2">
-        <div class="style-num">05</div>
-        <div class="style-name">Illustrative</div>
-        <p class="style-desc">Owls, turtles, penguins, and everything eclectic — detailed linework and custom illustration-style pieces.</p>
-      </div>
-      <div class="style-card reveal reveal-delay-3">
-        <div class="style-num">06</div>
-        <div class="style-name">Custom Flash</div>
-        <p class="style-desc">Walk in, pick a design, walk out tattooed. Pre-drawn flash sheets starting from $10. No appointment needed.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ── WALK-IN STRIP ───────────────────────────────────────── -->
-<section id="walkin">
-  <p class="wi-label">No Appointment Needed</p>
-  <h2 class="wi-title">Walk In.<br>Walk Out <em>Tattooed.</em></h2>
-  <p class="wi-sub">Brad is in the shop daily. Bring your idea — or pick from the flash sheet. No waiting, no hassle.</p>
-  <a href="tel:5412812993" class="btn-dark">(541) 281-2993</a>
-  <div class="price-pills">
-    <div class="pill">Flash pieces <strong>from $10</strong></div>
-    <div class="pill">Custom work <strong>by appointment or walk-in</strong></div>
-    <div class="pill">Lowest rates <strong>in Klamath Falls</strong></div>
-    <div class="pill">Open <strong>Tue – Sat</strong></div>
-  </div>
-</section>
-
-<!-- ── CONTACT ─────────────────────────────────────────────── -->
+<!-- ── CONTACT ── -->
 <section id="contact">
-  <div class="contact-inner">
-    <div class="contact-info reveal">
-      <span class="section-label">Find Us</span>
-      <h2 class="section-title">Come<br>Find Us</h2>
-      <p class="section-body">No appointment needed. Walk in any Tuesday through Saturday and Brad will take care of you. Flash pieces start at $10.</p>
-
-      <div style="margin-top:40px;">
-        <div class="info-row">
-          <div class="info-icon">📍</div>
-          <div>
-            <div class="info-label">Location</div>
-            <div class="info-value">116 N 9th St, Klamath Falls, OR 97601</div>
-          </div>
-        </div>
-        <div class="info-row">
-          <div class="info-icon">📞</div>
-          <div>
-            <div class="info-label">Phone</div>
-            <div class="info-value"><a href="tel:5412812993">(541) 281-2993</a></div>
-          </div>
-        </div>
-        <div class="info-row">
-          <div class="info-icon">🕐</div>
-          <div>
-            <div class="info-label">Hours</div>
-            <div class="info-value">Tuesday – Saturday &nbsp;·&nbsp; Open All Day<br><span style="color:#666; font-size:0.85rem;">Walk-ins welcome any time we're open</span></div>
-          </div>
-        </div>
-        <div class="info-row">
-          <div class="info-icon">📸</div>
-          <div>
-            <div class="info-label">Instagram</div>
-            <div class="info-value"><a href="https://instagram.com/mejia.ink" target="_blank">@mejia.ink</a></div>
-          </div>
-        </div>
+  <div class="contact-wrap">
+    <div>
+      <h2 class="contact-h2">Find<br>Us</h2>
+      <p class="contact-desc">No appointment needed. Walk in Tuesday through Saturday and Brad will take care of you. Flash pieces start at $10.</p>
+      <div class="c-row"><div class="c-label">Location</div><div class="c-val">116 N 9th St, Klamath Falls, OR 97601</div></div>
+      <div class="c-row"><div class="c-label">Phone</div><div class="c-val"><a href="tel:5412812993">(541) 281-2993</a></div></div>
+      <div class="c-row"><div class="c-label">Hours</div><div class="c-val" style="text-transform:none;">Tuesday – Saturday · Open All Day</div></div>
+      <div class="c-row"><div class="c-label">Instagram</div><div class="c-val"><a href="https://instagram.com/mejia.ink" target="_blank">@mejia.ink</a></div></div>
+      <div style="margin-top:28px;">
+        <button class="btn-book open-form" style="font-size:12px;padding:6px 18px;">Book a session</button>
       </div>
     </div>
-
-    <div class="reveal reveal-delay-2">
-      <div class="map-wrap">
-        <span class="map-label">Klamath Falls, OR</span>
-        <iframe
-          src="https://maps.google.com/maps?q=116+N+9th+St+Klamath+Falls+OR+97601&output=embed"
-          allowfullscreen
-          loading="lazy"
-          title="Stain'd INK Tattoo Location"
-        ></iframe>
-      </div>
+    <div>
+      <iframe class="map-frame"
+        src="https://maps.google.com/maps?q=116+N+9th+St+Klamath+Falls+OR+97601&output=embed"
+        allowfullscreen loading="lazy"
+        title="Stain'd INK location"></iframe>
     </div>
   </div>
 </section>
 
-<!-- ── FOOTER ──────────────────────────────────────────────── -->
+<!-- ── FOOTER ── -->
 <footer>
-  <div class="footer-inner">
-    <div class="footer-brand">
-      <div class="logo">STAIN'D <span>INK</span></div>
-      <p>Tattoo art by Brad Mejia in Klamath Falls, OR. Custom work, walk-ins welcome. Bringing your ideas to life in ink since day one.</p>
-      <div class="social-links">
-        <a href="https://instagram.com/mejia.ink" target="_blank" class="social-link" title="Instagram">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.5" fill="currentColor"/></svg>
+  <div class="footer-grid">
+    <div>
+      <div class="footer-logo">STAIN'D INK</div>
+      <p class="footer-body">Tattoo art by Brad Mejia in Klamath Falls, OR. Custom work, walk-ins welcome. Bringing your ideas to life in ink.</p>
+      <div class="footer-socials">
+        <a href="https://instagram.com/mejia.ink" target="_blank" class="fsoc" title="Instagram">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.5" fill="currentColor"/></svg>
         </a>
-        <a href="https://www.facebook.com/p/Staind-INK-Tattoo-100089861208051/" target="_blank" class="social-link" title="Facebook">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+        <a href="https://www.facebook.com/p/Staind-INK-Tattoo-100089861208051/" target="_blank" class="fsoc" title="Facebook">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
         </a>
-        <a href="tel:5412812993" class="social-link" title="Call">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.72 13 19.79 19.79 0 0 1 1.65 4.35 2 2 0 0 1 3.62 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        <a href="tel:5412812993" class="fsoc" title="Call">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.72 13 19.79 19.79 0 0 1 1.65 4.35 2 2 0 0 1 3.62 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
         </a>
       </div>
     </div>
     <div class="footer-col">
       <h4>Navigate</h4>
       <ul>
-        <li><a href="#gallery">The Work</a></li>
+        <li><a href="#artists">Artists</a></li>
+        <li><a href="#gallery">Work</a></li>
         <li><a href="#styles">Styles</a></li>
-        <li><a href="#about">The Artist</a></li>
-        <li><a href="#walkin">Walk-Ins</a></li>
-        <li><a href="#contact">Book a Session</a></li>
+        <li><a href="#contact">Contact</a></li>
       </ul>
     </div>
     <div class="footer-col">
@@ -1164,61 +988,155 @@
       <ul>
         <li>116 N 9th St</li>
         <li>Klamath Falls, OR 97601</li>
-        <li style="margin-top:12px;"><a href="tel:5412812993">(541) 281-2993</a></li>
-        <li style="margin-top:12px;">Tue – Sat: Open All Day</li>
-        <li>Walk-Ins Always Welcome</li>
-        <li style="margin-top:12px; color:#c8a96e;">Flash from $10</li>
+        <li style="margin-top:6px;"><a href="tel:5412812993">(541) 281-2993</a></li>
+        <li style="margin-top:6px;">Tue – Sat · Open All Day</li>
+        <li>Walk-ins always welcome</li>
+        <li style="margin-top:6px;">Flash from $10</li>
       </ul>
     </div>
   </div>
   <div class="footer-bottom">
     <p>© 2026 Stain'd INK Tattoo · Brad Mejia · Klamath Falls, OR</p>
-    <p>Demo site — <a href="https://instagram.com/mejia.ink" target="_blank">@mejia.ink</a></p>
+    <p><a href="https://instagram.com/mejia.ink" target="_blank">@mejia.ink</a></p>
   </div>
 </footer>
 
-<!-- ── JS ──────────────────────────────────────────────────── -->
+<!-- ── BOOKING FORM MODAL ── -->
+<div id="form-modal">
+  <div class="form-box">
+    <button class="form-close close-form">✕</button>
+    <div class="form-h">Book a Session</div>
+    <p class="form-sub">Fill out the form and we'll get back to you within 48 hours. Walk-ins always welcome.</p>
+    <form id="bform">
+      <div class="fg-row">
+        <div class="fg"><label>Name *</label><input type="text" placeholder="Your name" required/></div>
+        <div class="fg"><label>Surname</label><input type="text" placeholder="Your surname"/></div>
+      </div>
+      <div class="fg"><label>Email *</label><input type="email" placeholder="you@email.com" required/></div>
+      <div class="fg"><label>Phone *</label><input type="tel" placeholder="(541) 000-0000" required/></div>
+      <div class="fg"><label>Instagram</label><input type="text" placeholder="@yourhandle"/></div>
+      <div class="fg"><label>Tattoo Idea</label><textarea placeholder="Describe your concept, size, placement..."></textarea></div>
+      <div class="fg"><label>Style</label>
+        <select>
+          <option value="">Select a style...</option>
+          <option>American Traditional</option>
+          <option>Black &amp; Grey</option>
+          <option>Neo-Traditional</option>
+          <option>Realism</option>
+          <option>Illustrative</option>
+          <option>Custom Flash</option>
+          <option>Not sure — let's talk</option>
+        </select>
+      </div>
+      <button type="submit" class="btn-form-submit">Send Request</button>
+    </form>
+  </div>
+</div>
+
 <script>
-  // Nav scroll effect
-  const nav = document.getElementById('nav');
-  window.addEventListener('scroll', () => {
-    nav.classList.toggle('scrolled', window.scrollY > 60);
-  });
+// ── Hero slideshow ──
+let cur = 0;
+const imgs = document.querySelectorAll('.hero-img');
+const dots = document.querySelectorAll('.dot');
+function goTo(n) {
+  imgs[cur].classList.replace('on','off');
+  dots[cur].classList.remove('on');
+  cur = n;
+  imgs[cur].classList.replace('off','on');
+  dots[cur].classList.add('on');
+}
+dots.forEach(d => d.addEventListener('click', () => goTo(+d.dataset.i)));
+setInterval(() => goTo((cur + 1) % imgs.length), 5000);
 
-  // Scroll reveal
-  const reveals = document.querySelectorAll('.reveal');
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('visible');
-        observer.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
-  reveals.forEach(el => observer.observe(el));
-
-  // Form submit (demo)
-  function handleSubmit(e) {
-    e.preventDefault();
-    const btn = e.target.querySelector('.btn-submit');
-    btn.textContent = '✓ Message Sent!';
-    btn.style.background = '#2ecc71';
-    btn.style.color = '#fff';
-    setTimeout(() => {
-      btn.textContent = 'Send Inquiry →';
-      btn.style.background = '';
-      btn.style.color = '';
-      e.target.reset();
-    }, 3000);
+// ── Header hide on scroll-down ──
+let prevY = 0;
+const hdr = document.getElementById('main-header');
+const flt = document.getElementById('float-cta');
+const ftEl = document.querySelector('footer');
+window.addEventListener('scroll', () => {
+  const y = window.scrollY;
+  const dn = y > prevY && y > 80;
+  hdr.style.transform = dn ? 'translateY(-100%)' : 'translateY(0)';
+  const ftRect = ftEl.getBoundingClientRect();
+  if (ftRect.top < window.innerHeight) {
+    flt.classList.remove('show');
+  } else if (dn) {
+    flt.classList.add('show');
+  } else {
+    flt.classList.remove('show');
   }
+  prevY = y;
+}, {passive:true});
 
-  // Hero parallax
-  window.addEventListener('scroll', () => {
-    const heroBg = document.querySelector('.hero-bg');
-    if (heroBg) {
-      heroBg.style.transform = `scale(1.04) translateY(${window.scrollY * 0.2}px)`;
-    }
+// ── Studio clock ──
+const clk = document.getElementById('clock');
+function tick() {
+  const t = new Date().toLocaleTimeString('en-US',{timeZone:'America/Los_Angeles',hour:'numeric',minute:'2-digit',hour12:true});
+  if(clk) clk.textContent = t + ' · OR';
+}
+tick(); setInterval(tick, 10000);
+
+// ── Artist carousel auto-advance + progress bar ──
+document.querySelectorAll('.acard').forEach(card => {
+  const carousel = card.querySelector('.acard-carousel');
+  const bar = card.querySelector('.acard-progress-fill');
+  if (!carousel) return;
+  const n = carousel.querySelectorAll('img').length;
+  let timer;
+
+  carousel.addEventListener('scroll', () => {
+    const pct = carousel.scrollLeft / (carousel.scrollWidth - carousel.clientWidth || 1);
+    if(bar) bar.style.width = (((Math.round(pct * (n-1)) + 1) / n) * 100) + '%';
+  }, {passive:true});
+
+  card.addEventListener('mouseenter', () => {
+    let i = 0;
+    timer = setInterval(() => {
+      i = (i + 1) % n;
+      carousel.scrollTo({left: i * carousel.clientWidth, behavior:'smooth'});
+    }, 900);
   });
+  card.addEventListener('mouseleave', () => {
+    clearInterval(timer);
+    carousel.scrollTo({left:0, behavior:'smooth'});
+    if(bar) bar.style.width = '25%';
+  });
+});
+
+// ── Modal form ──
+const modal = document.getElementById('form-modal');
+function openForm()  { modal.classList.add('open');    document.body.style.overflow='hidden'; }
+function closeForm() { modal.classList.remove('open'); document.body.style.overflow=''; }
+document.querySelectorAll('.open-form').forEach(b => b.addEventListener('click', openForm));
+document.querySelectorAll('.close-form').forEach(b => b.addEventListener('click', closeForm));
+modal.addEventListener('click', e => { if(e.target === modal) closeForm(); });
+document.getElementById('bform').addEventListener('submit', e => {
+  e.preventDefault();
+  const btn = e.target.querySelector('.btn-form-submit');
+  btn.textContent = '✓ Request Sent!';
+  setTimeout(() => { btn.textContent = 'Send Request'; closeForm(); e.target.reset(); }, 2500);
+});
+
+// ── Mobile menu ──
+const ham = document.getElementById('ham-btn');
+const mob = document.getElementById('mob-menu');
+const lines = document.querySelectorAll('.ham-line');
+let mOpen = false;
+ham.addEventListener('click', () => {
+  mOpen = !mOpen;
+  mob.classList.toggle('open', mOpen);
+  lines[0].style.transform = mOpen ? 'rotate(45deg) translate(4px,5px)' : '';
+  lines[1].style.opacity   = mOpen ? '0' : '';
+  lines[2].style.transform = mOpen ? 'rotate(-45deg) translate(4px,-5px)' : '';
+  document.body.style.overflow = mOpen ? 'hidden' : '';
+});
+function closeMob() {
+  mOpen = false;
+  mob.classList.remove('open');
+  lines[0].style.transform = lines[2].style.transform = '';
+  lines[1].style.opacity = '';
+  document.body.style.overflow = '';
+}
 </script>
 </body>
 </html>
