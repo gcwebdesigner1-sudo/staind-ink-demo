@@ -134,6 +134,17 @@
       top: 28px; right: 70px;
       z-index: 110;
     }
+    #header-phone {
+      position: fixed;
+      top: 28px; right: 175px;
+      z-index: 110;
+      font-size: 14px;
+      color: var(--offWhite);
+      letter-spacing: 1.12px;
+      white-space: nowrap;
+    }
+    #header-phone a { color: var(--offWhite); }
+    #header-phone a:hover { opacity: 0.65; }
     /* Mobile menu */
     #mob-menu {
       display: none;
@@ -713,6 +724,9 @@
   <a href="#" style="font-family:'Antonio',sans-serif;font-size:1.1rem;font-weight:500;letter-spacing:0.18em;color:var(--offWhite);">STAIN'D INK</a>
 </div>
 
+<!-- ── PHONE (always visible, top-right) ── -->
+<div id="header-phone"><a href="tel:5412812993">(541) 281-2993</a></div>
+
 <!-- ── MOBILE ELEMENTS ── -->
 <div id="mob-book">
   <button class="btn-book open-form">Book now</button>
@@ -745,10 +759,7 @@
       <li><a href="#contact">Contact</a></li>
       <li><span id="clock"></span></li>
     </ul>
-    <div style="display:flex;align-items:center;gap:16px;">
-      <a href="tel:5412812993" style="font-size:14px;color:var(--offWhite);letter-spacing:1.12px;white-space:nowrap;">(541) 281-2993</a>
-      <button class="btn-book open-form">Book now</button>
-    </div>
+    <button class="btn-book open-form">Book now</button>
   </div>
 </header>
 
