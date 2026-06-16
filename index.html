@@ -4,847 +4,744 @@
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Stain'd INK Tattoo — Klamath Falls, OR</title>
-
-  <!-- Antonio ≈ Ganga's "Aro" display font | Inter ≈ Ganga's "NB International Pro" body font -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Antonio:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-
+  <!-- Antonio ≈ Aro (Ganga display font) | Inter ≈ NB International Pro CG (Ganga body font) -->
+  <link href="https://fonts.googleapis.com/css2?family=Antonio:wght@300;400;500;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
     :root {
-      --coal:     #0A0A0A;
-      --coal2:    #111111;
-      --off:      #F0F0F0;
-      --grey:     #555555;
-      --grey2:    #888888;
-      --border:   rgba(240,240,240,0.1);
+      --coal:    #181818;
+      --offWhite:#f0f0f0;
+      --grey:    #b6b6b6;
+      --fair:    #ffdbbf;
+      --brown:   #2d1a0a;
+      --border:  rgba(240,240,240,0.08);
     }
 
     html { scroll-behavior: smooth; }
 
     body {
       background: var(--coal);
-      color: var(--off);
+      color: var(--offWhite);
       font-family: 'Inter', sans-serif;
-      font-weight: 300;
-      overflow-x: hidden;
+      font-weight: 400;
       text-transform: uppercase;
-      letter-spacing: 0.05em;
+      letter-spacing: 1.12px;
+      overflow-x: hidden;
     }
 
     ::-webkit-scrollbar { width: 2px; }
     ::-webkit-scrollbar-track { background: var(--coal); }
-    ::-webkit-scrollbar-thumb { background: var(--grey); }
+    ::-webkit-scrollbar-thumb { background: #444; }
 
-    /* ── GANGA-STYLE "BOOK NOW" BUTTON — frosted glass pill ── */
+    a { color: inherit; text-decoration: none; }
+
+    /* ── FONTS ── */
+    .font-aro { font-family: 'Antonio', sans-serif; }
+    .normal-case { text-transform: none; letter-spacing: normal; }
+
+    /* ── BOOK NOW BUTTON — exact Ganga spec ── */
     .btn-book {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      background: rgba(240,240,240,0.08);
-      border: 1px solid rgba(240,240,240,0.55);
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
-      color: var(--off);
+      background: rgba(240,240,240,0.10);
+      border: 1px solid rgb(240,240,240);
       border-radius: 6px;
-      padding: 3px 11px;
+      padding: 2px 8px;
+      color: var(--offWhite);
       font-family: 'Inter', sans-serif;
-      font-size: 13px;
+      font-size: 14px;
       font-weight: 400;
-      letter-spacing: 0.07em;
+      letter-spacing: 1.12px;
       text-transform: uppercase;
       cursor: pointer;
-      text-decoration: none;
-      transition: background 0.25s;
+      transition: background 0.3s ease;
       white-space: nowrap;
-      line-height: 1.6;
     }
-    .btn-book:hover { background: rgba(240,240,240,0.22); }
-    button.btn-book { font-family: 'Inter', sans-serif; }
+    .btn-book:hover { background: rgba(240,240,240,0.30); }
 
-    /* ── FIXED LOGO (top-left, like Ganga) ── */
-    #site-logo {
-      position: fixed;
-      top: 26px;
-      left: 26px;
-      z-index: 110;
-    }
-    #site-logo a {
-      font-family: 'Antonio', sans-serif;
-      font-size: 1.25rem;
-      font-weight: 600;
-      letter-spacing: 0.15em;
-      color: var(--off);
-      text-decoration: none;
-    }
-
-    /* ── HEADER — nav centered, book now right (Ganga exact) ── */
+    /* ── FIXED HEADER ── */
     #main-header {
       position: fixed;
       top: 0; left: 0; right: 0;
-      z-index: 100;
-      transition: transform 0.3s ease;
+      z-index: 50;
+      transition: transform 0.3s ease-in-out;
     }
-    .header-fade {
+    .header-gradient {
       position: absolute;
       top: 0; left: 0; right: 0;
-      height: 210px;
-      background: linear-gradient(to bottom,rgba(0,0,0,0.72) 0%,rgba(0,0,0,0.28) 55%,transparent 100%);
+      height: 208px; /* h-52 */
+      background: linear-gradient(to bottom, rgba(0,0,0,0.70) 0%, rgba(0,0,0,0.30) 40%, transparent 100%);
       pointer-events: none;
     }
-    .header-row {
+    /* Desktop nav — hidden on mobile */
+    .header-desktop {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 26px 26px;
+      padding: 28px 28px 0;
       position: relative;
     }
-    /* invisible spacer to balance the logo on the left */
-    .header-spacer {
+    .header-logo-spacer { visibility: hidden; }
+    .header-logo-spacer img, .header-logo-text { width: 112px; }
+    .header-logo-text {
       font-family: 'Antonio', sans-serif;
-      font-size: 1.25rem;
-      font-weight: 600;
-      letter-spacing: 0.15em;
-      visibility: hidden;
+      font-size: 1.1rem;
+      font-weight: 500;
+      letter-spacing: 0.18em;
     }
     .header-nav {
       display: flex;
-      gap: 56px;
+      align-items: center;
+      gap: 80px;
       list-style: none;
     }
     .header-nav a {
-      color: var(--off);
-      text-decoration: none;
+      color: var(--offWhite);
       font-size: 14px;
       font-weight: 400;
-      letter-spacing: 0.05em;
+      letter-spacing: 1.12px;
+      text-transform: uppercase;
       transition: opacity 0.2s;
     }
     .header-nav a:hover { opacity: 0.6; }
-    #clock { font-size: 14px; color: var(--off); }
+    #clock { font-size: 14px; color: var(--offWhite); }
 
-    /* ── MOBILE BOOK BUTTON ── */
-    #mob-book {
-      display: none;
-      position: fixed;
-      top: 26px;
-      right: 66px;
-      z-index: 110;
-    }
-
-    /* ── HAMBURGER ── */
+    /* Hamburger — mobile only */
     #ham-btn {
       display: none;
       position: fixed;
-      top: 26px;
-      right: 26px;
+      top: 28px; right: 28px;
       z-index: 110;
       flex-direction: column;
       justify-content: center;
       align-items: center;
       gap: 5px;
-      width: 30px;
-      height: 30px;
-      background: none;
-      border: none;
+      width: 32px; height: 32px;
+      background: none; border: none;
       cursor: pointer;
     }
     .ham-line {
-      display: block;
-      width: 22px;
-      height: 1.5px;
-      background: var(--off);
-      transition: all 0.3s;
+      display: block; width: 22px; height: 1.5px;
+      background: var(--offWhite); transition: all 0.3s;
     }
-
-    /* ── MOBILE MENU ── */
-    #mob-menu {
+    #mob-book {
       display: none;
       position: fixed;
-      inset: 0;
+      top: 28px; right: 70px;
+      z-index: 110;
+    }
+    /* Mobile menu */
+    #mob-menu {
+      display: none;
+      position: fixed; inset: 0;
       z-index: 105;
-      background: rgba(10,10,10,0.97);
+      background: rgba(24,24,24,0.97);
       backdrop-filter: blur(12px);
-      align-items: center;
-      justify-content: center;
-      opacity: 0;
-      pointer-events: none;
+      align-items: center; justify-content: center;
+      opacity: 0; pointer-events: none;
       transition: opacity 0.2s;
     }
     #mob-menu.open { opacity: 1; pointer-events: auto; }
-    #mob-menu ul {
-      list-style: none;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 14px;
-    }
-    #mob-menu ul a {
-      font-size: 1.15rem;
-      color: var(--off);
-      text-decoration: none;
-      letter-spacing: 0.1em;
-      padding: 10px 24px;
-      background: rgba(255,255,255,0.06);
-      backdrop-filter: blur(6px);
-      border-radius: 8px;
-      display: block;
-    }
+    #mob-menu ul { list-style: none; display: flex; flex-direction: column; align-items: center; gap: 16px; }
+    #mob-menu ul a { font-size: 1.1rem; color: var(--offWhite); letter-spacing: 0.1em; padding: 10px 28px; background: rgba(255,255,255,0.06); border-radius: 8px; display: block; }
 
-    /* ── FLOATING CTA (Ganga's bottom-right pill that slides up) ── */
+    /* Floating CTA */
     #float-cta {
-      position: fixed;
-      bottom: 26px;
-      right: 26px;
-      z-index: 100;
-      opacity: 0;
-      transform: translateY(70px);
+      position: fixed; bottom: 28px; right: 28px;
+      z-index: 100; opacity: 0; transform: translateY(70px);
       pointer-events: none;
-      transition: opacity 0.45s ease, transform 0.45s ease;
+      transition: opacity 0.4s ease, transform 0.4s ease;
     }
-    #float-cta.show {
-      opacity: 1;
-      transform: translateY(0);
-      pointer-events: auto;
-    }
+    #float-cta.show { opacity: 1; transform: translateY(0); pointer-events: auto; }
 
-    /* ── HERO (exact Ganga structure) ── */
+    /* ── HERO ── */
     #hero {
       position: relative;
       width: 100%;
-      height: 100vh;
-      overflow: hidden;
+      height: 90vh;
     }
-    .hero-img {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
+    @media (min-width: 768px) { #hero { height: 100vh; } }
+    .hero-slide {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
       object-fit: cover;
       transition: opacity 0.7s ease-in-out;
     }
-    .hero-img.on  { opacity: 1; }
-    .hero-img.off { opacity: 0; }
-
-    /* bottom-to-top gradient, matches Ganga's from-black/85 to-90% */
+    /* Ganga's exact gradient: from-black/85 to-90% */
     .hero-veil {
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(to top,rgba(0,0,0,0.88) 0%,rgba(0,0,0,0.18) 60%,transparent 90%);
-      z-index: 1;
-      pointer-events: none;
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, transparent 90%);
+      z-index: 1; pointer-events: none;
     }
-
-    /* slideshow dots — bottom center, Ganga puts them at bottom-42/bottom-60 */
+    /* Dots — bottom-42 (168px) desktop, bottom-60 (240px) md */
     #hero-dots {
       position: absolute;
-      bottom: 140px;
-      left: 50%;
+      bottom: 168px; left: 50%;
       transform: translateX(-50%);
-      display: flex;
-      gap: 8px;
+      display: flex; gap: 8px;
       z-index: 10;
     }
     .dot {
-      width: 4px; height: 4px;
+      display: block; width: 4px; height: 4px;
       border-radius: 50%;
-      background: rgba(255,255,255,0.35);
-      border: none;
-      cursor: pointer;
+      background: rgba(255,255,255,0.40);
+      border: none; cursor: pointer; padding: 0;
       transition: all 0.3s;
-      padding: 0;
     }
-    .dot.on { background: #fff; transform: scale(1.4); }
-
-    /* Large title at bottom of hero — Ganga's SVG text translated to Antonio font */
-    .hero-title-block {
+    .dot.active { background: #fff; transform: scale(1.4); }
+    /* Hero title — large at bottom, Antonio ≈ Aro */
+    .hero-title-wrap {
       position: absolute;
-      bottom: 56px;
-      left: 50%;
-      transform: translateX(-50%);
-      z-index: 10;
-      text-align: center;
-      width: 88%;
+      bottom: 0; left: 0; right: 0;
+      z-index: 2;
+      padding: 0 28px 20px;
+      overflow: hidden;
     }
     .hero-title-main {
       display: block;
       font-family: 'Antonio', sans-serif;
-      font-size: clamp(4.5rem, 14vw, 13rem);
-      font-weight: 700;
-      color: var(--off);
+      font-size: clamp(5rem, 16vw, 15rem);
+      font-weight: 400;
+      color: var(--offWhite);
       line-height: 0.82;
-      letter-spacing: 0.03em;
+      letter-spacing: -0.01em;
       text-transform: uppercase;
     }
-    .hero-title-sub {
-      display: block;
+
+    /* ── SECTION SHARED STYLES ── */
+    .section-h2 {
       font-family: 'Antonio', sans-serif;
-      font-size: clamp(0.85rem, 2.5vw, 1.8rem);
-      font-weight: 300;
-      color: rgba(240,240,240,0.55);
-      letter-spacing: 0.28em;
+      font-size: clamp(1.4rem, 5vw, 2.5rem);
+      font-weight: 400;
+      color: var(--fair);
+      text-align: center;
+      letter-spacing: 1.12px;
       text-transform: uppercase;
-      margin-top: 10px;
+      padding-top: 80px;
+      line-height: 0.9;
+    }
+    .section-p {
+      color: var(--grey);
+      font-size: 12px;
+      text-align: center;
+      letter-spacing: 1.12px;
+      line-height: 1.5;
+      text-transform: uppercase;
+      margin-top: 20px;
+      max-width: 58%;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    /* color-blur decorative blob (mimics Ganga's color-blur.webp) */
+    .color-blur {
+      position: absolute;
+      pointer-events: none;
+      width: 800px; height: 600px;
+      border-radius: 50%;
+      background: radial-gradient(ellipse, rgba(120,60,180,0.22) 0%, rgba(200,80,100,0.14) 45%, transparent 70%);
+      filter: blur(90px);
+      transform: rotate(45deg);
+      z-index: 0;
+      opacity: 0.5;
     }
 
     /* ── ARTISTS SECTION ── */
     #artists {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
       position: relative;
-      padding: 72px 26px 56px;
-      text-align: center;
       overflow: hidden;
     }
-    /* color-blur decorative blob — copies Ganga's color-blur.webp effect */
-    .color-blob {
-      position: absolute;
-      pointer-events: none;
-      border-radius: 50%;
-      filter: blur(80px);
-    }
-    .blob-1 {
-      width: 600px; height: 400px;
-      background: radial-gradient(ellipse,rgba(100,60,180,0.18) 0%,rgba(180,60,100,0.1) 60%,transparent 100%);
-      top: 50%; left: 50%;
-      transform: translate(-50%,-55%) rotate(45deg);
-    }
-
-    .section-h2 {
-      font-family: 'Antonio', sans-serif;
-      font-size: clamp(1.8rem, 4.5vw, 3.2rem);
-      font-weight: 400;
-      letter-spacing: 0.06em;
-      color: var(--off);
+    #artists-filter {
+      display: flex;
+      gap: 10px;
+      margin-top: 20px;
+      flex-wrap: wrap;
+      justify-content: center;
       position: relative;
       z-index: 1;
-      margin-bottom: 10px;
     }
-    .section-p {
+    .filter-btn {
+      background: rgba(240,240,240,0.08);
+      border: 1px solid rgba(240,240,240,0.30);
+      border-radius: 6px;
+      padding: 2px 10px;
+      color: var(--offWhite);
       font-size: 12px;
-      color: var(--grey2);
-      letter-spacing: 0.04em;
-      text-transform: none;
-      line-height: 1.65;
-      max-width: 500px;
-      margin: 0 auto 36px;
-      position: relative;
-      z-index: 1;
+      letter-spacing: 1.12px;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background 0.2s;
     }
+    .filter-btn:hover, .filter-btn.active { background: rgba(240,240,240,0.22); }
 
-    /* Artist grid — Ganga uses responsive columns */
+    /* Artist grid */
     #artists-grid {
       display: grid;
-      grid-template-columns: repeat(3,1fr);
-      max-width: 1180px;
-      margin: 0 auto;
+      grid-template-columns: repeat(3, 1fr);
+      width: 100%;
+      margin-top: 28px;
       position: relative;
       z-index: 1;
     }
-
-    /* Artist card — exact Ganga structure */
+    /* Artist card */
     .acard {
       display: block;
       text-decoration: none;
-      color: var(--off);
+      color: var(--offWhite);
       position: relative;
       cursor: pointer;
-      overflow: hidden;
     }
-    .acard-carousel-wrap { position: relative; }
-
-    /* Horizontal scroll snap carousel — Ganga's exact approach */
+    .acard-carousel-wrap { position: relative; overflow: hidden; }
     .acard-carousel {
       display: flex;
       overflow-x: scroll;
       scroll-snap-type: x mandatory;
-      -webkit-overflow-scrolling: touch;
       scrollbar-width: none;
     }
     .acard-carousel::-webkit-scrollbar { display: none; }
     .acard-carousel img {
-      width: 100%;
-      flex-shrink: 0;
+      width: 100%; flex-shrink: 0;
       scroll-snap-align: center;
       aspect-ratio: 4/5;
       object-fit: cover;
       pointer-events: none;
-      user-select: none;
       -webkit-user-drag: none;
     }
-
-    /* "Tap to discover" top overlay — hidden until hover */
+    /* "Tap to discover" */
     .acard-tap {
       position: absolute;
       top: 0; left: 0; right: 0;
-      padding: 14px 12px 40px;
-      background: linear-gradient(to bottom,rgba(0,0,0,0.68),transparent);
+      padding: 14px 0 40px;
+      background: linear-gradient(to bottom, rgba(0,0,0,0.65), transparent);
       opacity: 0;
       transition: opacity 0.3s;
       pointer-events: none;
       z-index: 5;
-    }
-    .acard-tap p {
-      font-size: 11px;
-      color: rgba(255,255,255,0.8);
       text-align: center;
-      letter-spacing: 0.05em;
-      text-transform: none;
     }
+    .acard-tap p { font-size: 11px; color: rgba(255,255,255,0.80); letter-spacing: 1.12px; }
     .acard:hover .acard-tap { opacity: 1; }
-
-    /* Progress bar at bottom of image */
-    .acard-progress {
+    /* Progress bar */
+    .acard-bar {
       position: absolute;
       bottom: 0; left: 0; right: 0;
-      height: 2px;
-      background: rgba(255,255,255,0.08);
-      z-index: 5;
-      opacity: 0;
-      transition: opacity 0.3s;
+      height: 2px; background: rgba(255,255,255,0.08);
+      z-index: 5; opacity: 0; transition: opacity 0.3s;
     }
-    .acard:hover .acard-progress { opacity: 1; }
-    .acard-progress-fill {
+    .acard:hover .acard-bar { opacity: 1; }
+    .acard-bar-fill {
       height: 100%;
       background: rgba(255,255,255,0.65);
       width: 25%;
       transition: width 0.25s ease;
     }
-
-    /* Artist info below card */
+    /* Artist info */
     .acard-info {
-      padding: 12px 6px 24px;
+      padding: 10px 8px 20px;
       text-align: center;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 4px;
-    }
-    .acard-avatar {
-      width: 48px;
-      height: 48px;
-      border-radius: 50%;
-      object-fit: cover;
-      border: 1px solid rgba(240,240,240,0.18);
-      margin-bottom: 4px;
     }
     .acard-style {
       font-size: 10px;
-      color: var(--grey2);
-      letter-spacing: 0.04em;
-      text-transform: none;
+      color: var(--grey);
+      letter-spacing: 1.12px;
+      text-transform: uppercase;
+      margin-bottom: 2px;
     }
     .acard-name {
       font-family: 'Antonio', sans-serif;
-      font-size: clamp(1.1rem, 2.2vw, 1.6rem);
+      font-size: clamp(1rem, 2vw, 1.5rem);
       font-weight: 400;
-      letter-spacing: 0.07em;
+      letter-spacing: 1.12px;
+      text-transform: uppercase;
+      line-height: 0.9;
+      color: var(--offWhite);
     }
+    /* Coming soon ghost */
+    .acard-ghost { opacity: 0.20; pointer-events: none; }
+    .ghost-img { aspect-ratio: 4/5; background: #222; }
 
-    /* dimmed "coming soon" placeholders */
-    .acard-ghost {
-      opacity: 0.22;
-      pointer-events: none;
-    }
-    .ghost-img {
-      aspect-ratio: 4/5;
-      background: var(--coal2);
-      border: 1px solid var(--border);
-    }
-
-    /* ── GALLERY ── */
-    #gallery {
-      padding: 72px 26px;
-      border-top: 1px solid var(--border);
-    }
-    .gallery-grid {
-      display: grid;
-      grid-template-columns: repeat(3,1fr);
-      gap: 2px;
-      max-width: 1180px;
-      margin: 36px auto 0;
-    }
-    .gallery-item {
-      overflow: hidden;
+    /* Show more artists link */
+    #show-more {
+      margin-top: 24px;
+      padding-bottom: 60px;
       position: relative;
+      z-index: 1;
     }
-    .gallery-item img {
-      width: 100%;
-      aspect-ratio: 1;
-      object-fit: cover;
-      transition: transform 0.55s ease, filter 0.45s ease;
-      filter: grayscale(12%);
+    #show-more a {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      align-items: flex-start;
+      color: var(--offWhite);
+      font-size: 12px;
+      letter-spacing: 1.12px;
+      cursor: pointer;
     }
-    .gallery-item:hover img { transform: scale(1.05); filter: none; }
-    .gallery-link {
-      display: block;
-      text-align: center;
-      margin-top: 28px;
-      font-size: 11px;
-      color: var(--grey2);
-      letter-spacing: 0.07em;
-      text-decoration: none;
-      border-bottom: 1px solid rgba(240,240,240,0.15);
-      display: inline-block;
-      padding-bottom: 2px;
-      text-transform: none;
-    }
-    .gallery-link:hover { color: var(--off); }
-    .gallery-center { text-align: center; }
+    #show-more a span:first-child { font-family: 'Antonio', sans-serif; font-size: 1.1rem; }
+    #show-more a:hover { opacity: 0.7; }
 
-    /* ── STYLES ── */
-    #styles {
-      padding: 72px 0;
-      border-top: 1px solid var(--border);
-      text-align: center;
+    /* ── "THINKING ABOUT YOUR NEXT TATTOO?" CTA ── */
+    #cta-mid {
+      width: 100%;
+      height: 55vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      position: relative;
+      overflow: hidden;
+      margin-top: 20px;
     }
-    #styles .section-h2, #styles .section-p { padding: 0 26px; }
+    @media (min-width: 768px) { #cta-mid { height: 80vh; margin-top: 80px; } }
+    #cta-mid h3 {
+      font-family: 'Antonio', sans-serif;
+      font-size: clamp(1.3rem, 5vw, 3.5rem);
+      font-weight: 400;
+      color: var(--offWhite);
+      text-align: center;
+      letter-spacing: 1.12px;
+      text-transform: uppercase;
+      line-height: 0.9;
+      width: 66%;
+      position: relative; z-index: 1;
+    }
+    #cta-mid p {
+      color: var(--grey);
+      font-size: clamp(0.8rem, 1.5vw, 1.2rem);
+      letter-spacing: 1.12px;
+      text-transform: uppercase;
+      position: relative; z-index: 1;
+    }
+    #cta-mid .btn-book { position: relative; z-index: 1; margin-top: 12px; }
+    .cta-bg {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      filter: brightness(0.22);
+    }
+
+    /* ── STYLES SECTION ── */
+    #styles {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+      padding-bottom: 40px;
+    }
     .styles-track {
       display: flex;
       overflow-x: auto;
       gap: 3px;
-      margin: 36px 0 0;
+      width: 100%;
+      margin-top: 24px;
       scrollbar-width: none;
       cursor: grab;
-      padding: 0 26px;
     }
     .styles-track::-webkit-scrollbar { display: none; }
     .scard {
-      flex: 0 0 340px;
-      height: 480px;
+      flex: 0 0 320px;
+      height: 460px;
       position: relative;
       overflow: hidden;
-      cursor: pointer;
     }
     .scard-bg {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
       object-fit: cover;
-      transition: transform 0.6s ease, filter 0.4s;
-      filter: brightness(0.45);
+      transition: transform 0.6s ease;
+      filter: brightness(0.42);
     }
-    .scard:hover .scard-bg { transform: scale(1.06); filter: brightness(0.6); }
+    .scard:hover .scard-bg { transform: scale(1.06); filter: brightness(0.55); }
     .scard-overlay {
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(to top, rgba(0,0,0,0.75) 0%, transparent 60%);
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, transparent 55%);
     }
+    .scard-top {
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      padding: 14px 16px;
+      display: flex; justify-content: flex-end;
+    }
+    .scard-tap { font-size: 11px; color: rgba(255,255,255,0.70); letter-spacing: 1.12px; opacity: 0; transition: opacity 0.3s; }
+    .scard:hover .scard-tap { opacity: 1; }
     .scard-content {
       position: absolute;
       bottom: 0; left: 0; right: 0;
-      padding: 28px 22px;
-      text-align: left;
-    }
-    .scard-num {
-      font-family: 'Antonio', sans-serif;
-      font-size: 0.75rem;
-      color: rgba(240,240,240,0.45);
-      letter-spacing: 0.18em;
-      margin-bottom: 8px;
+      padding: 20px 18px;
     }
     .scard-name {
-      font-family: 'Antonio', sans-serif;
-      font-size: 1.55rem;
-      letter-spacing: 0.06em;
-      margin-bottom: 8px;
-      line-height: 1.1;
+      font-size: clamp(0.9rem, 1.5vw, 1.25rem);
+      color: var(--offWhite);
+      letter-spacing: 1.12px;
+      text-transform: uppercase;
+      line-height: 1;
+      margin-bottom: 6px;
     }
     .scard-desc {
-      font-size: 10px;
-      color: rgba(240,240,240,0.55);
-      line-height: 1.75;
-      letter-spacing: 0.03em;
-      text-transform: none;
-      max-width: 260px;
-    }
-
-    /* ── CONTACT ── */
-    #contact {
-      padding: 72px 26px;
-      border-top: 1px solid var(--border);
-    }
-    .contact-wrap {
-      max-width: 1180px;
-      margin: 0 auto;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 80px;
-    }
-    .contact-h2 {
-      font-family: 'Antonio', sans-serif;
-      font-size: clamp(2.5rem, 5vw, 4.5rem);
-      font-weight: 400;
-      letter-spacing: 0.05em;
-      line-height: 0.88;
-      margin-bottom: 18px;
-    }
-    .contact-desc {
       font-size: 11px;
-      color: var(--grey2);
-      line-height: 1.8;
+      color: rgba(240,240,240,0.70);
+      line-height: 1.6;
       text-transform: none;
-      max-width: 360px;
-      margin-bottom: 36px;
+      letter-spacing: normal;
+      font-weight: 300;
     }
-    .c-row { margin-bottom: 18px; }
-    .c-label {
-      font-size: 9px;
-      letter-spacing: 0.14em;
-      color: var(--grey);
-      margin-bottom: 4px;
-    }
-    .c-val { font-size: 13px; letter-spacing: 0.04em; }
-    .c-val a { color: var(--off); text-decoration: none; }
-    .c-val a:hover { opacity: 0.65; }
-    .map-frame {
-      width: 100%;
-      height: 420px;
-      border: 0;
-      filter: grayscale(90%) contrast(1.1) invert(0.9);
-      opacity: 0.72;
-      transition: filter 0.3s, opacity 0.3s;
-    }
-    .map-frame:hover { filter: grayscale(25%); opacity: 1; }
 
-    /* ── FOOTER ── */
-    footer {
-      padding: 48px 26px;
-      border-top: 1px solid var(--border);
+    /* ── BOOK NOW / THANK US LATER SECTION ── */
+    #book-section {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      margin-top: 88px;
+      margin-bottom: 0;
+      padding-bottom: 96px;
+      position: relative;
     }
-    .footer-grid {
-      max-width: 1180px;
-      margin: 0 auto;
-      display: grid;
-      grid-template-columns: 1.8fr 1fr 1fr;
-      gap: 48px;
-    }
-    .footer-logo {
+    #book-section h3 {
       font-family: 'Antonio', sans-serif;
-      font-size: 1.4rem;
-      font-weight: 600;
-      letter-spacing: 0.14em;
+      font-size: clamp(2rem, 6vw, 5rem);
+      font-weight: 400;
+      color: var(--offWhite);
+      text-align: center;
+      letter-spacing: 1.12px;
+      text-transform: uppercase;
+      line-height: 0.9;
       margin-bottom: 10px;
     }
-    .footer-body {
-      font-size: 11px;
-      color: var(--grey);
-      line-height: 1.75;
-      text-transform: none;
-      max-width: 260px;
-      margin-bottom: 18px;
+    #book-section > p {
+      color: var(--offWhite);
+      font-size: clamp(0.85rem, 1.5vw, 1.25rem);
+      letter-spacing: 1.12px;
+      text-transform: uppercase;
+      text-align: center;
+      margin-bottom: 32px;
     }
-    .footer-socials { display: flex; gap: 10px; }
-    .fsoc {
-      width: 30px; height: 30px;
-      border: 1px solid var(--border);
-      border-radius: 4px;
-      display: flex; align-items: center; justify-content: center;
-      color: var(--grey2);
-      text-decoration: none;
-      transition: border-color 0.2s, color 0.2s;
+    /* Animated form tag rows */
+    .tag-rows {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 36px;
+      overflow: hidden;
     }
-    .fsoc:hover { border-color: rgba(240,240,240,0.35); color: var(--off); }
-    .footer-col h4 {
-      font-size: 9px;
-      letter-spacing: 0.16em;
-      color: var(--grey);
-      font-weight: 500;
-      margin-bottom: 14px;
+    .tag-row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: nowrap;
     }
-    .footer-col ul { list-style: none; }
-    .footer-col ul li { margin-bottom: 8px; }
-    .footer-col ul li,
-    .footer-col ul li a {
-      font-size: 11px;
-      color: var(--grey2);
-      letter-spacing: 0.04em;
-      text-transform: none;
-      text-decoration: none;
+    .tag-pill {
+      background: var(--brown);
+      color: var(--fair);
+      border-radius: 6px;
+      padding: 6px 14px;
+      font-size: 13px;
+      letter-spacing: 1.12px;
+      text-transform: uppercase;
+      white-space: nowrap;
+      opacity: 0;
+      transform: translateX(60px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
     }
-    .footer-col ul li a:hover { color: var(--off); }
-    .footer-bottom {
+    .tag-pill.from-left { transform: translateX(-60px); }
+    .tag-pill.visible { opacity: 1; transform: translateX(0); }
+
+    /* ── CONTACT / FOOTER ── */
+    footer {
+      border-top: 1px solid rgba(240,240,240,0.08);
+      padding: 48px 28px;
+    }
+    .footer-inner {
+      display: flex;
+      flex-direction: column;
+      gap: 40px;
       max-width: 1180px;
-      margin: 28px auto 0;
-      padding-top: 18px;
-      border-top: 1px solid var(--border);
+      margin: 0 auto;
+    }
+    @media (min-width: 768px) {
+      .footer-inner { flex-direction: row; justify-content: space-between; }
+    }
+    .footer-col h4 {
+      opacity: 0.30;
+      font-size: 12px;
+      letter-spacing: 1.12px;
+      text-transform: uppercase;
+      font-weight: 400;
+      margin-bottom: 8px;
+    }
+    .footer-col p, .footer-col a {
+      font-size: 12px;
+      color: var(--offWhite);
+      text-transform: none;
+      letter-spacing: normal;
+      line-height: 1.7;
+      display: block;
+    }
+    .footer-col a:hover { opacity: 0.65; }
+    .footer-bottom {
+      border-top: 1px solid rgba(240,240,240,0.08);
+      padding-top: 16px;
+      margin-top: 28px;
+      max-width: 1180px;
+      margin-left: auto;
+      margin-right: auto;
       display: flex;
       justify-content: space-between;
+      align-items: center;
     }
     .footer-bottom p, .footer-bottom a {
       font-size: 10px;
-      color: rgba(240,240,240,0.18);
+      color: rgba(240,240,240,0.25);
       text-transform: none;
-      text-decoration: none;
-      letter-spacing: 0.05em;
+      letter-spacing: normal;
     }
 
-    /* ── BOOKING FORM MODAL (Ganga uses a sliding overlay form) ── */
+    /* ── BOOKING MODAL ── */
     #form-modal {
-      position: fixed;
-      inset: 0;
+      position: fixed; inset: 0;
       z-index: 200;
       display: none;
-      align-items: center;
-      justify-content: center;
+      align-items: center; justify-content: center;
       padding: 20px;
     }
     #form-modal.open { display: flex; }
     #form-modal::before {
       content: '';
-      position: absolute;
-      inset: 0;
-      background: rgba(0,0,0,0.82);
-      backdrop-filter: blur(10px);
+      position: absolute; inset: 0;
+      background: rgba(0,0,0,0.85);
+      backdrop-filter: blur(12px);
     }
     .form-box {
-      background: var(--coal2);
-      border: 1px solid var(--border);
-      width: 100%;
-      max-width: 540px;
+      background: #1e1e1e;
+      border: 1px solid rgba(240,240,240,0.10);
+      width: 100%; max-width: 540px;
       max-height: 92vh;
       overflow-y: auto;
       padding: 36px 32px;
-      position: relative;
-      z-index: 1;
+      position: relative; z-index: 1;
+      border-radius: 4px;
     }
     .form-close {
-      position: absolute;
-      top: 14px; right: 18px;
+      position: absolute; top: 14px; right: 18px;
       background: none; border: none;
-      color: var(--grey2); font-size: 1.3rem;
+      color: var(--grey); font-size: 1.2rem;
       cursor: pointer; line-height: 1;
     }
-    .form-close:hover { color: var(--off); }
+    .form-close:hover { color: var(--offWhite); }
     .form-h {
       font-family: 'Antonio', sans-serif;
-      font-size: 2rem;
-      font-weight: 400;
-      letter-spacing: 0.1em;
-      margin-bottom: 6px;
+      font-size: 2.2rem; font-weight: 400;
+      letter-spacing: 1.12px; text-transform: uppercase;
+      color: var(--offWhite);
+      margin-bottom: 4px;
     }
     .form-sub {
-      font-size: 10px;
-      color: var(--grey2);
-      text-transform: none;
-      letter-spacing: 0.05em;
+      font-size: 11px; color: var(--grey);
+      text-transform: none; letter-spacing: normal;
       margin-bottom: 28px;
     }
     .fg { margin-bottom: 20px; }
     .fg label {
-      display: block;
-      font-size: 9px;
-      letter-spacing: 0.14em;
-      color: var(--grey);
-      margin-bottom: 6px;
+      display: block; font-size: 9px;
+      letter-spacing: 1.12px; color: rgba(240,240,240,0.40);
+      text-transform: uppercase; margin-bottom: 6px;
     }
     .fg input, .fg select, .fg textarea {
-      width: 100%;
-      background: transparent;
-      border: none;
-      border-bottom: 1px solid rgba(240,240,240,0.1);
-      color: var(--off);
+      width: 100%; background: transparent;
+      border: none; border-bottom: 1px solid rgba(240,240,240,0.12);
+      color: var(--offWhite);
       font-family: 'Inter', sans-serif;
-      font-size: 13px;
-      font-weight: 300;
-      letter-spacing: 0.03em;
-      padding: 7px 4px;
-      outline: none;
-      text-transform: none;
+      font-size: 13px; font-weight: 300;
+      letter-spacing: 0.03em; padding: 7px 0;
+      outline: none; text-transform: none;
       transition: border-color 0.2s;
     }
-    .fg input::placeholder { color: rgba(240,240,240,0.25); }
-    .fg input:focus, .fg select:focus, .fg textarea:focus {
-      border-bottom-color: rgba(240,240,240,0.45);
-    }
-    .fg select option { background: var(--coal2); }
+    .fg input::placeholder { color: rgba(240,240,240,0.20); }
+    .fg input:focus, .fg select:focus, .fg textarea:focus { border-bottom-color: rgba(240,240,240,0.45); }
+    .fg select option { background: #1e1e1e; }
     .fg textarea { resize: vertical; min-height: 72px; }
     .fg-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
-    .btn-form-submit {
-      width: 100%;
-      margin-top: 6px;
+    .btn-submit {
+      width: 100%; margin-top: 8px;
       background: rgba(240,240,240,0.08);
-      border: 1px solid rgba(240,240,240,0.4);
-      color: var(--off);
+      border: 1px solid rgba(240,240,240,0.40);
+      color: var(--offWhite);
       font-family: 'Inter', sans-serif;
-      font-size: 11px;
-      font-weight: 500;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      padding: 11px;
-      cursor: pointer;
+      font-size: 12px; font-weight: 500;
+      letter-spacing: 1.12px; text-transform: uppercase;
+      padding: 11px; cursor: pointer;
       border-radius: 5px;
       transition: background 0.2s;
     }
-    .btn-form-submit:hover { background: rgba(240,240,240,0.18); }
+    .btn-submit:hover { background: rgba(240,240,240,0.18); }
 
     /* ── RESPONSIVE ── */
-    @media (max-width: 1024px) {
-      .header-nav { gap: 30px; }
-      #artists-grid { grid-template-columns: repeat(2,1fr); }
-      .gallery-grid { grid-template-columns: repeat(2,1fr); }
-      .contact-wrap { grid-template-columns: 1fr; gap: 40px; }
-      .footer-grid { grid-template-columns: 1fr 1fr; }
-    }
-    @media (max-width: 768px) {
-      .header-row { display: none; }
+    @media (max-width: 1280px) {
+      .header-desktop { display: none !important; }
       #ham-btn { display: flex; }
-      #mob-menu { display: flex; }
       #mob-book { display: block; }
-      #artists-grid { grid-template-columns: repeat(2,1fr); }
-      .gallery-grid { grid-template-columns: repeat(2,1fr); }
-      .footer-grid { grid-template-columns: 1fr; }
-      .fg-row { grid-template-columns: 1fr; }
+      #mob-menu { display: flex; }
     }
-    @media (max-width: 480px) {
-      #artists-grid { grid-template-columns: 1fr; }
-      .gallery-grid { grid-template-columns: 1fr; }
-      .hero-title-main { font-size: clamp(3.5rem,18vw,6rem); }
+    @media (max-width: 1024px) {
+      #artists-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 640px) {
+      #artists-grid { grid-template-columns: repeat(2, 1fr); }
+      .section-p { max-width: 90%; }
+      .fg-row { grid-template-columns: 1fr; }
+      .hero-title-main { font-size: clamp(3rem, 18vw, 5rem); }
     }
   </style>
 </head>
 <body>
 
-<!-- ── FIXED LOGO ── -->
-<div id="site-logo">
-  <a href="#">STAIN'D INK</a>
+<!-- ── FIXED LOGO (top-left, invisible spacer mirrors) ── -->
+<div style="position:fixed;top:28px;left:28px;z-index:110;">
+  <a href="#" style="font-family:'Antonio',sans-serif;font-size:1.1rem;font-weight:500;letter-spacing:0.18em;color:var(--offWhite);">STAIN'D INK</a>
 </div>
 
-<!-- ── MOBILE BOOK BUTTON ── -->
+<!-- ── MOBILE ELEMENTS ── -->
 <div id="mob-book">
   <button class="btn-book open-form">Book now</button>
 </div>
-
-<!-- ── HAMBURGER ── -->
 <button id="ham-btn" aria-label="Menu">
   <span class="ham-line"></span>
   <span class="ham-line"></span>
   <span class="ham-line"></span>
 </button>
-
-<!-- ── MOBILE MENU ── -->
 <div id="mob-menu">
   <ul>
     <li><a href="#artists" onclick="closeMob()">Artists</a></li>
-    <li><a href="#gallery" onclick="closeMob()">Work</a></li>
-    <li><a href="#styles"  onclick="closeMob()">Styles</a></li>
+    <li><a href="#styles" onclick="closeMob()">Styles</a></li>
+    <li><a href="#contact" onclick="closeMob()">Studio</a></li>
     <li><a href="#contact" onclick="closeMob()">Contact</a></li>
-    <li style="margin-top:14px;">
-      <button class="btn-book open-form" onclick="closeMob()">Book now</button>
-    </li>
+    <li style="margin-top:14px;"><button class="btn-book open-form" onclick="closeMob()">Book now</button></li>
   </ul>
 </div>
 
 <!-- ── HEADER ── -->
 <header id="main-header">
-  <div class="header-fade"></div>
-  <div class="header-row">
-    <span class="header-spacer">STAIN'D INK</span>
+  <div class="header-gradient"></div>
+  <div class="header-desktop">
+    <!-- invisible spacer to center the nav (mirrors the logo) -->
+    <span class="header-logo-spacer" style="font-family:'Antonio',sans-serif;font-size:1.1rem;font-weight:500;letter-spacing:0.18em;">STAIN'D INK</span>
     <ul class="header-nav">
       <li><a href="#artists">Artists</a></li>
-      <li><a href="#gallery">Work</a></li>
       <li><a href="#styles">Styles</a></li>
+      <li><a href="#contact">Studio</a></li>
       <li><a href="#contact">Contact</a></li>
       <li><span id="clock"></span></li>
     </ul>
@@ -854,67 +751,63 @@
 
 <!-- ── FLOATING CTA ── -->
 <div id="float-cta">
-  <button class="btn-book open-form" style="font-size:13px;padding:5px 14px;">Book now</button>
+  <button class="btn-book open-form">Book now</button>
 </div>
 
 <!-- ── HERO ── -->
 <section id="hero">
-  <img class="hero-img on"
-       src="https://images.unsplash.com/photo-1568515045052-f9a854d70bfd?w=1800&q=90&fit=crop"
-       alt="Tattoo studio"/>
-  <img class="hero-img off"
-       src="https://images.unsplash.com/photo-1597852075234-fd721ac361d3?w=1800&q=90&fit=crop&crop=focalpoint&fp-x=0.5&fp-y=0.25"
-       alt="Tattoo work"/>
-  <img class="hero-img off"
-       src="https://images.unsplash.com/photo-1605647533135-51b5906087d0?w=1800&q=90&fit=crop"
-       alt="Fine line tattoo"/>
-
+  <h1 style="position:absolute;z-index:-1000;color:transparent;">Stain'd INK Tattoo Klamath Falls Oregon</h1>
   <div class="hero-veil"></div>
-
+  <img data-slide="0" class="hero-slide" style="opacity:1;"
+       src="https://images.unsplash.com/photo-1568515045052-f9a854d70bfd?w=1900&q=90&fit=crop" alt=""/>
+  <img data-slide="1" class="hero-slide" style="opacity:0;"
+       src="https://images.unsplash.com/photo-1597852075234-fd721ac361d3?w=1900&q=90&fit=crop" alt=""/>
+  <img data-slide="2" class="hero-slide" style="opacity:0;"
+       src="https://images.unsplash.com/photo-1604881989793-466aca8dd319?w=1900&q=90&fit=crop" alt=""/>
   <div id="hero-dots">
-    <button class="dot on" data-i="0"></button>
-    <button class="dot"    data-i="1"></button>
-    <button class="dot"    data-i="2"></button>
+    <button class="dot active" data-i="0"></button>
+    <button class="dot" data-i="1"></button>
+    <button class="dot" data-i="2"></button>
   </div>
-
-  <!-- Ganga-style large bottom title -->
-  <div class="hero-title-block">
-    <span class="hero-title-main">STAIN'D INK</span>
-    <span class="hero-title-sub">Klamath Falls, Oregon &nbsp;·&nbsp; Walk-Ins Welcome</span>
+  <div class="hero-title-wrap">
+    <span class="hero-title-main">Stain'd Ink</span>
   </div>
 </section>
 
 <!-- ── ARTISTS ── -->
 <section id="artists">
-  <div class="color-blob blob-1"></div>
-
+  <div class="color-blur" style="top:40%;left:50%;transform:translate(-50%,-55%) rotate(45deg);"></div>
   <h2 class="section-h2">Meet our artists</h2>
-  <p class="section-p">Custom tattoo work crafted with precision and passion in Klamath Falls, Oregon. Walk-ins welcome daily — flash from $10.</p>
+  <p class="section-p">Custom tattoo work crafted with precision and passion in Klamath Falls, Oregon. Walk-ins welcome — flash from $10.</p>
+
+  <div id="artists-filter">
+    <button class="filter-btn active">All</button>
+    <button class="filter-btn">Traditional</button>
+    <button class="filter-btn">Black &amp; Grey</button>
+    <button class="filter-btn">Realism</button>
+    <button class="filter-btn">Neo-Traditional</button>
+    <button class="filter-btn">Illustrative</button>
+  </div>
 
   <div id="artists-grid">
-
     <!-- Brad Mejia -->
-    <a class="acard" href="https://instagram.com/mejia.ink" target="_blank" data-name="brad">
+    <a class="acard" href="https://instagram.com/mejia.ink" target="_blank">
       <div class="acard-carousel-wrap">
-        <div class="acard-carousel" id="c-brad">
-          <img src="https://images.unsplash.com/photo-1568515045052-f9a854d70bfd?w=600&q=85&fit=crop" alt="Brad Mejia tattoo"/>
-          <img src="https://images.unsplash.com/photo-1605647533135-51b5906087d0?w=600&q=85&fit=crop" alt="Brad Mejia tattoo"/>
+        <div class="acard-carousel">
           <img src="https://images.unsplash.com/photo-1552627019-947c3789ffb5?w=600&q=85&fit=crop" alt="Brad Mejia tattoo"/>
-          <img src="https://images.pexels.com/photos/2126124/pexels-photo-2126124.jpeg?w=600&h=750&fit=crop" alt="Brad Mejia tattoo"/>
+          <img src="https://images.unsplash.com/photo-1611501275019-9b5cda994e8d?w=600&q=85&fit=crop" alt="Brad Mejia tattoo"/>
+          <img src="https://images.unsplash.com/photo-1568515387631-8b650bbcdb90?w=600&q=85&fit=crop" alt="Brad Mejia tattoo"/>
+          <img src="https://images.unsplash.com/photo-1604881989793-466aca8dd319?w=600&q=85&fit=crop" alt="Brad Mejia tattoo"/>
         </div>
         <div class="acard-tap"><p>Tap to discover</p></div>
-        <div class="acard-progress">
-          <div class="acard-progress-fill" id="p-brad"></div>
-        </div>
+        <div class="acard-bar"><div class="acard-bar-fill"></div></div>
       </div>
       <div class="acard-info">
-        <img class="acard-avatar" src="https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?w=120&q=85&fit=crop&crop=face" alt="Brad Mejia"/>
-        <h3 class="acard-name">Brad Mejia</h3>
         <p class="acard-style">Traditional · Black &amp; Grey · Realism</p>
+        <h3 class="acard-name">Brad Mejia</h3>
       </div>
     </a>
-
-    <!-- Coming soon slots -->
+    <!-- Coming soon -->
     <div class="acard acard-ghost">
       <div class="ghost-img"></div>
       <div class="acard-info">
@@ -922,7 +815,6 @@
         <h3 class="acard-name">Coming Soon</h3>
       </div>
     </div>
-
     <div class="acard acard-ghost">
       <div class="ghost-img"></div>
       <div class="acard-info">
@@ -930,149 +822,157 @@
         <h3 class="acard-name">Coming Soon</h3>
       </div>
     </div>
+  </div>
 
+  <div id="show-more">
+    <a href="https://instagram.com/mejia.ink" target="_blank">
+      <span>See more work</span>
+      <span style="color:var(--grey);font-size:11px;">@mejia.ink on Instagram</span>
+    </a>
   </div>
 </section>
 
-<!-- ── GALLERY ── -->
-<section id="gallery">
-  <h2 class="section-h2">The Work</h2>
-  <p class="section-p">Recent pieces by Brad Mejia. See more on Instagram.</p>
-  <div class="gallery-grid">
-    <div class="gallery-item"><img src="https://images.unsplash.com/photo-1568515045052-f9a854d70bfd?w=600&q=85&fit=crop" alt="" loading="lazy"/></div>
-    <div class="gallery-item"><img src="https://images.unsplash.com/photo-1605647533135-51b5906087d0?w=600&q=85&fit=crop" alt="" loading="lazy"/></div>
-    <div class="gallery-item"><img src="https://images.pexels.com/photos/2126124/pexels-photo-2126124.jpeg?w=600&h=600&fit=crop" alt="" loading="lazy"/></div>
-    <div class="gallery-item"><img src="https://images.unsplash.com/photo-1552627019-947c3789ffb5?w=600&q=85&fit=crop" alt="" loading="lazy"/></div>
-    <div class="gallery-item"><img src="https://images.pexels.com/photos/4125582/pexels-photo-4125582.jpeg?w=600&h=600&fit=crop" alt="" loading="lazy"/></div>
-    <div class="gallery-item"><img src="https://images.unsplash.com/photo-1597852075234-fd721ac361d3?w=600&q=85&fit=crop&crop=focalpoint&fp-x=0.5&fp-y=0.3" alt="" loading="lazy"/></div>
-  </div>
-  <div class="gallery-center" style="margin-top:28px;">
-    <a class="gallery-link" href="https://instagram.com/mejia.ink" target="_blank">View all work on Instagram → @mejia.ink</a>
-  </div>
+<!-- ── "THINKING ABOUT YOUR NEXT TATTOO?" CTA ── -->
+<section id="cta-mid">
+  <img class="cta-bg" src="https://images.unsplash.com/photo-1568515045052-f9a854d70bfd?w=1600&q=80&fit=crop" alt=""/>
+  <div class="color-blur" style="top:50%;left:50%;transform:translate(-50%,-50%) rotate(30deg);opacity:0.4;"></div>
+  <h3>Thinking about your next tattoo?</h3>
+  <p>Get it done with us</p>
+  <button class="btn-book open-form" style="margin-top:16px;">Book now</button>
 </section>
 
 <!-- ── STYLES ── -->
 <section id="styles">
-  <h2 class="section-h2">Styles</h2>
-  <p class="section-p">Every style mastered by one artist.</p>
+  <div class="color-blur" style="top:50%;right:-200px;transform:translateY(-50%) rotate(-30deg);opacity:0.4;left:auto;"></div>
+  <h2 class="section-h2">Masters in different styles</h2>
+  <p class="section-p">Outstanding for mastering the most important styles. Swipe to see the different projects and get an idea of our art.</p>
   <div class="styles-track">
     <div class="scard">
-      <img class="scard-bg" src="https://images.unsplash.com/photo-1611501275019-9b5cda994e8d?w=700&q=85&fit=crop" alt="American Traditional"/>
+      <img class="scard-bg" src="https://images.unsplash.com/photo-1611501275019-9b5cda994e8d?w=700&q=85&fit=crop" alt=""/>
       <div class="scard-overlay"></div>
-      <div class="scard-content"><div class="scard-num">01</div><div class="scard-name">American Traditional</div><p class="scard-desc">Bold outlines, classic iconography — sparrows, skulls, scorpions, anchors. Built to look great for decades.</p></div>
+      <div class="scard-top"><span class="scard-tap">Tap to explore</span></div>
+      <div class="scard-content">
+        <div class="scard-name">American Traditional</div>
+        <p class="scard-desc">Bold outlines and classic iconography built to look great for decades.</p>
+      </div>
     </div>
     <div class="scard">
-      <img class="scard-bg" src="https://images.unsplash.com/photo-1568515387631-8b650bbcdb90?w=700&q=85&fit=crop" alt="Black & Grey"/>
+      <img class="scard-bg" src="https://images.unsplash.com/photo-1568515387631-8b650bbcdb90?w=700&q=85&fit=crop" alt=""/>
       <div class="scard-overlay"></div>
-      <div class="scard-content"><div class="scard-num">02</div><div class="scard-name">Black &amp; Grey</div><p class="scard-desc">Timeless monochrome with smooth gradients and deep contrast. Elegant, dramatic, and built to age beautifully.</p></div>
+      <div class="scard-top"><span class="scard-tap">Tap to explore</span></div>
+      <div class="scard-content">
+        <div class="scard-name">Black &amp; Grey</div>
+        <p class="scard-desc">Black and grey tattoos with deep shading and stunning contrast, perfect for timeless pieces.</p>
+      </div>
     </div>
     <div class="scard">
-      <img class="scard-bg" src="https://images.unsplash.com/photo-1597852075234-fd721ac361d3?w=700&q=85&fit=crop" alt="Neo-Traditional"/>
+      <img class="scard-bg" src="https://images.unsplash.com/photo-1597852075234-fd721ac361d3?w=700&q=85&fit=crop" alt=""/>
       <div class="scard-overlay"></div>
-      <div class="scard-content"><div class="scard-num">03</div><div class="scard-name">Neo-Traditional</div><p class="scard-desc">Classic motifs reimagined with modern illustration — rich color palettes and detailed linework.</p></div>
+      <div class="scard-top"><span class="scard-tap">Tap to explore</span></div>
+      <div class="scard-content">
+        <div class="scard-name">Neo-Traditional</div>
+        <p class="scard-desc">Classic motifs reimagined with modern illustration and rich color palettes.</p>
+      </div>
     </div>
     <div class="scard">
-      <img class="scard-bg" src="https://images.unsplash.com/photo-1605647533135-51b5906087d0?w=700&q=85&fit=crop" alt="Realism"/>
+      <img class="scard-bg" src="https://images.unsplash.com/photo-1605647533135-51b5906087d0?w=700&q=85&fit=crop" alt=""/>
       <div class="scard-overlay"></div>
-      <div class="scard-content"><div class="scard-num">04</div><div class="scard-name">Realism</div><p class="scard-desc">Photorealistic portraits, wildlife, and fine-detail pieces that look like they belong in a frame.</p></div>
+      <div class="scard-top"><span class="scard-tap">Tap to explore</span></div>
+      <div class="scard-content">
+        <div class="scard-name">Realism</div>
+        <p class="scard-desc">Photorealistic portraits and fine-detail pieces that look like they belong in a frame.</p>
+      </div>
     </div>
     <div class="scard">
-      <img class="scard-bg" src="https://images.unsplash.com/photo-1552627019-947c3789ffb5?w=700&q=85&fit=crop" alt="Illustrative"/>
+      <img class="scard-bg" src="https://images.unsplash.com/photo-1552627019-947c3789ffb5?w=700&q=85&fit=crop" alt=""/>
       <div class="scard-overlay"></div>
-      <div class="scard-content"><div class="scard-num">05</div><div class="scard-name">Illustrative</div><p class="scard-desc">Detailed linework and custom illustration-style pieces. Owls, turtles, penguins, everything in between.</p></div>
+      <div class="scard-top"><span class="scard-tap">Tap to explore</span></div>
+      <div class="scard-content">
+        <div class="scard-name">Illustrative</div>
+        <p class="scard-desc">Detailed linework and custom illustration pieces with personality and depth.</p>
+      </div>
     </div>
     <div class="scard">
-      <img class="scard-bg" src="https://images.unsplash.com/photo-1568515045052-f9a854d70bfd?w=700&q=85&fit=crop" alt="Flash"/>
+      <img class="scard-bg" src="https://images.unsplash.com/photo-1605647533135-51b5906087d0?w=700&q=85&fit=crop" alt=""/>
       <div class="scard-overlay"></div>
-      <div class="scard-content"><div class="scard-num">06</div><div class="scard-name">Custom Flash</div><p class="scard-desc">Walk in, pick a design, walk out tattooed. Pre-drawn flash sheets starting from $10. No appointment needed.</p></div>
+      <div class="scard-top"><span class="scard-tap">Tap to explore</span></div>
+      <div class="scard-content">
+        <div class="scard-name">Custom Flash</div>
+        <p class="scard-desc">Walk in, pick a design, walk out tattooed. Flash sheets from $10. No appointment needed.</p>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- ── CONTACT ── -->
-<section id="contact">
-  <div class="contact-wrap">
-    <div>
-      <h2 class="contact-h2">Find<br>Us</h2>
-      <p class="contact-desc">No appointment needed. Walk in Tuesday through Saturday and Brad will take care of you. Flash pieces start at $10.</p>
-      <div class="c-row"><div class="c-label">Location</div><div class="c-val">116 N 9th St, Klamath Falls, OR 97601</div></div>
-      <div class="c-row"><div class="c-label">Phone</div><div class="c-val"><a href="tel:5412812993">(541) 281-2993</a></div></div>
-      <div class="c-row"><div class="c-label">Hours</div><div class="c-val" style="text-transform:none;">Tuesday – Saturday · Open All Day</div></div>
-      <div class="c-row"><div class="c-label">Instagram</div><div class="c-val"><a href="https://instagram.com/mejia.ink" target="_blank">@mejia.ink</a></div></div>
-      <div style="margin-top:28px;">
-        <button class="btn-book open-form" style="font-size:12px;padding:6px 18px;">Book a session</button>
-      </div>
+<!-- ── BOOK NOW / THANK US LATER ── -->
+<section id="book-section">
+  <h3>Book now</h3>
+  <p>Thank us later</p>
+  <div class="tag-rows">
+    <div class="tag-row" id="tag-row-1">
+      <span class="tag-pill from-left">Name &amp; Surname</span>
+      <span class="tag-pill">Email</span>
+      <span class="tag-pill from-left">Phone number</span>
     </div>
-    <div>
-      <iframe class="map-frame"
-        src="https://maps.google.com/maps?q=116+N+9th+St+Klamath+Falls+OR+97601&output=embed"
-        allowfullscreen loading="lazy"
-        title="Stain'd INK location"></iframe>
+    <div class="tag-row" id="tag-row-2">
+      <span class="tag-pill">Tattoo idea</span>
+      <span class="tag-pill from-left">Placement</span>
+      <span class="tag-pill">Reference photo</span>
+    </div>
+    <div class="tag-row" id="tag-row-3">
+      <span class="tag-pill from-left">Select your style</span>
+      <span class="tag-pill">Any artist in mind?</span>
     </div>
   </div>
+  <button class="btn-book open-form" style="font-size:14px;padding:4px 16px;">Book now</button>
 </section>
 
-<!-- ── FOOTER ── -->
-<footer>
-  <div class="footer-grid">
-    <div>
-      <div class="footer-logo">STAIN'D INK</div>
-      <p class="footer-body">Tattoo art by Brad Mejia in Klamath Falls, OR. Custom work, walk-ins welcome. Bringing your ideas to life in ink.</p>
-      <div class="footer-socials">
-        <a href="https://instagram.com/mejia.ink" target="_blank" class="fsoc" title="Instagram">
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.5" fill="currentColor"/></svg>
-        </a>
-        <a href="https://www.facebook.com/p/Staind-INK-Tattoo-100089861208051/" target="_blank" class="fsoc" title="Facebook">
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
-        </a>
-        <a href="tel:5412812993" class="fsoc" title="Call">
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.72 13 19.79 19.79 0 0 1 1.65 4.35 2 2 0 0 1 3.62 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-        </a>
-      </div>
+<!-- ── FOOTER / CONTACT ── -->
+<footer id="contact">
+  <div class="footer-inner">
+    <div class="footer-col">
+      <h4>Contact</h4>
+      <p class="normal-case" style="max-width:240px;color:var(--grey);margin-bottom:14px;">Have questions about your project? We guide you before taking the step.</p>
+      <a href="tel:5412812993" class="normal-case">(541) 281-2993</a>
     </div>
     <div class="footer-col">
-      <h4>Navigate</h4>
-      <ul>
-        <li><a href="#artists">Artists</a></li>
-        <li><a href="#gallery">Work</a></li>
-        <li><a href="#styles">Styles</a></li>
-        <li><a href="#contact">Contact</a></li>
-      </ul>
+      <h4>Stain'd INK Tattoo — Klamath Falls</h4>
+      <a href="https://maps.google.com/?q=116+N+9th+St+Klamath+Falls+OR" target="_blank" class="normal-case" style="max-width:220px;color:var(--grey);margin-bottom:14px;">116 N 9th St, Klamath Falls, OR 97601</a>
+      <a href="https://instagram.com/mejia.ink" target="_blank" class="normal-case">@mejia.ink</a>
     </div>
     <div class="footer-col">
-      <h4>Visit</h4>
-      <ul>
-        <li>116 N 9th St</li>
-        <li>Klamath Falls, OR 97601</li>
-        <li style="margin-top:6px;"><a href="tel:5412812993">(541) 281-2993</a></li>
-        <li style="margin-top:6px;">Tue – Sat · Open All Day</li>
-        <li>Walk-ins always welcome</li>
-        <li style="margin-top:6px;">Flash from $10</li>
-      </ul>
+      <h4>Don't think it twice</h4>
+      <button class="btn-book open-form" style="margin-bottom:10px;">Book now</button>
+      <p style="color:var(--grey);font-size:11px;text-transform:none;letter-spacing:normal;">Walk-ins welcome Tue–Sat</p>
+    </div>
+    <div class="footer-col">
+      <h4>Hours</h4>
+      <p class="normal-case" style="color:var(--grey);">Tuesday – Saturday<br>Open all day<br><br>Flash from $10<br>No appointment needed</p>
     </div>
   </div>
   <div class="footer-bottom">
     <p>© 2026 Stain'd INK Tattoo · Brad Mejia · Klamath Falls, OR</p>
-    <p><a href="https://instagram.com/mejia.ink" target="_blank">@mejia.ink</a></p>
+    <a href="https://instagram.com/mejia.ink" target="_blank">@mejia.ink</a>
   </div>
 </footer>
 
-<!-- ── BOOKING FORM MODAL ── -->
+<!-- ── BOOKING MODAL ── -->
 <div id="form-modal">
   <div class="form-box">
     <button class="form-close close-form">✕</button>
     <div class="form-h">Book a Session</div>
-    <p class="form-sub">Fill out the form and we'll get back to you within 48 hours. Walk-ins always welcome.</p>
+    <p class="form-sub">Fill out the form and Brad will get back to you within 48 hours. Walk-ins always welcome.</p>
     <form id="bform">
       <div class="fg-row">
         <div class="fg"><label>Name *</label><input type="text" placeholder="Your name" required/></div>
         <div class="fg"><label>Surname</label><input type="text" placeholder="Your surname"/></div>
       </div>
       <div class="fg"><label>Email *</label><input type="email" placeholder="you@email.com" required/></div>
-      <div class="fg"><label>Phone *</label><input type="tel" placeholder="(541) 000-0000" required/></div>
+      <div class="fg"><label>Phone number *</label><input type="tel" placeholder="(541) 000-0000" required/></div>
       <div class="fg"><label>Instagram</label><input type="text" placeholder="@yourhandle"/></div>
-      <div class="fg"><label>Tattoo Idea</label><textarea placeholder="Describe your concept, size, placement..."></textarea></div>
-      <div class="fg"><label>Style</label>
+      <div class="fg"><label>Tattoo idea</label><textarea placeholder="Describe your concept, size, placement..."></textarea></div>
+      <div class="fg"><label>Placement</label><input type="text" placeholder="Arm, back, leg..."/></div>
+      <div class="fg"><label>Select your style</label>
         <select>
           <option value="">Select a style...</option>
           <option>American Traditional</option>
@@ -1084,7 +984,13 @@
           <option>Not sure — let's talk</option>
         </select>
       </div>
-      <button type="submit" class="btn-form-submit">Send Request</button>
+      <div class="fg"><label>Any artist in mind?</label>
+        <select>
+          <option value="">Any artist...</option>
+          <option>Brad Mejia</option>
+        </select>
+      </div>
+      <button type="submit" class="btn-submit">Book now</button>
     </form>
   </div>
 </div>
@@ -1092,85 +998,100 @@
 <script>
 // ── Hero slideshow ──
 let cur = 0;
-const imgs = document.querySelectorAll('.hero-img');
-const dots = document.querySelectorAll('.dot');
-function goTo(n) {
-  imgs[cur].classList.replace('on','off');
-  dots[cur].classList.remove('on');
+const slides = document.querySelectorAll('.hero-slide');
+const dots = document.querySelectorAll('#hero-dots .dot');
+function goSlide(n) {
+  slides[cur].style.opacity = '0';
+  dots[cur].classList.remove('active');
   cur = n;
-  imgs[cur].classList.replace('off','on');
-  dots[cur].classList.add('on');
+  slides[cur].style.opacity = '1';
+  dots[cur].classList.add('active');
 }
-dots.forEach(d => d.addEventListener('click', () => goTo(+d.dataset.i)));
-setInterval(() => goTo((cur + 1) % imgs.length), 5000);
+dots.forEach(d => d.addEventListener('click', () => { goSlide(+d.dataset.i); clearInterval(slideTimer); slideTimer = setInterval(autoSlide, 5000); }));
+function autoSlide() { goSlide((cur + 1) % slides.length); }
+let slideTimer = setInterval(autoSlide, 5000);
 
 // ── Header hide on scroll-down ──
 let prevY = 0;
 const hdr = document.getElementById('main-header');
 const flt = document.getElementById('float-cta');
-const ftEl = document.querySelector('footer');
 window.addEventListener('scroll', () => {
   const y = window.scrollY;
   const dn = y > prevY && y > 80;
-  hdr.style.transform = dn ? 'translateY(-100%)' : 'translateY(0)';
-  const ftRect = ftEl.getBoundingClientRect();
-  if (ftRect.top < window.innerHeight) {
-    flt.classList.remove('show');
-  } else if (dn) {
-    flt.classList.add('show');
-  } else {
-    flt.classList.remove('show');
-  }
+  hdr.style.transform = dn ? 'translateY(-100%)' : '';
+  if (y > 300) { dn ? flt.classList.add('show') : flt.classList.remove('show'); }
+  else flt.classList.remove('show');
   prevY = y;
-}, {passive:true});
+}, {passive: true});
 
-// ── Studio clock ──
+// ── Studio clock (Klamath Falls = Pacific Time) ──
 const clk = document.getElementById('clock');
 function tick() {
-  const t = new Date().toLocaleTimeString('en-US',{timeZone:'America/Los_Angeles',hour:'numeric',minute:'2-digit',hour12:true});
-  if(clk) clk.textContent = t + ' · OR';
+  const t = new Date().toLocaleTimeString('en-US', {timeZone:'America/Los_Angeles', hour:'numeric', minute:'2-digit', hour12:true});
+  if (clk) clk.textContent = t + ' · OR';
 }
 tick(); setInterval(tick, 10000);
 
-// ── Artist carousel auto-advance + progress bar ──
+// ── Artist carousel auto-advance ──
 document.querySelectorAll('.acard').forEach(card => {
-  const carousel = card.querySelector('.acard-carousel');
-  const bar = card.querySelector('.acard-progress-fill');
-  if (!carousel) return;
-  const n = carousel.querySelectorAll('img').length;
-  let timer;
-
-  carousel.addEventListener('scroll', () => {
-    const pct = carousel.scrollLeft / (carousel.scrollWidth - carousel.clientWidth || 1);
-    if(bar) bar.style.width = (((Math.round(pct * (n-1)) + 1) / n) * 100) + '%';
+  const car = card.querySelector('.acard-carousel');
+  const fill = card.querySelector('.acard-bar-fill');
+  if (!car) return;
+  const n = car.querySelectorAll('img').length;
+  let timer, idx = 0;
+  car.addEventListener('scroll', () => {
+    const pct = car.scrollLeft / (car.scrollWidth - car.clientWidth || 1);
+    const frame = Math.round(pct * (n - 1));
+    if (fill) fill.style.width = ((frame + 1) / n * 100) + '%';
   }, {passive:true});
-
   card.addEventListener('mouseenter', () => {
-    let i = 0;
     timer = setInterval(() => {
-      i = (i + 1) % n;
-      carousel.scrollTo({left: i * carousel.clientWidth, behavior:'smooth'});
+      idx = (idx + 1) % n;
+      car.scrollTo({left: idx * car.clientWidth, behavior: 'smooth'});
     }, 900);
   });
   card.addEventListener('mouseleave', () => {
-    clearInterval(timer);
-    carousel.scrollTo({left:0, behavior:'smooth'});
-    if(bar) bar.style.width = '25%';
+    clearInterval(timer); idx = 0;
+    car.scrollTo({left: 0, behavior: 'smooth'});
+    if (fill) fill.style.width = '25%';
   });
 });
 
-// ── Modal form ──
+// ── Styles track drag scroll ──
+const track = document.querySelector('.styles-track');
+if (track) {
+  let down = false, startX, scrollLeft;
+  track.addEventListener('mousedown', e => { down = true; startX = e.pageX - track.offsetLeft; scrollLeft = track.scrollLeft; track.style.cursor='grabbing'; });
+  track.addEventListener('mouseleave', () => { down = false; track.style.cursor='grab'; });
+  track.addEventListener('mouseup', () => { down = false; track.style.cursor='grab'; });
+  track.addEventListener('mousemove', e => { if (!down) return; e.preventDefault(); const x = e.pageX - track.offsetLeft; track.scrollLeft = scrollLeft - (x - startX); });
+}
+
+// ── Tag pills animation on scroll ──
+const tagObs = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const pills = entry.target.querySelectorAll('.tag-pill');
+      pills.forEach((pill, i) => {
+        setTimeout(() => pill.classList.add('visible'), i * 120);
+      });
+    }
+  });
+}, {threshold: 0.3});
+document.querySelector('#book-section') && tagObs.observe(document.querySelector('#book-section'));
+
+// ── Modal ──
 const modal = document.getElementById('form-modal');
-function openForm()  { modal.classList.add('open');    document.body.style.overflow='hidden'; }
-function closeForm() { modal.classList.remove('open'); document.body.style.overflow=''; }
+function openForm()  { modal.classList.add('open');    document.body.style.overflow = 'hidden'; }
+function closeForm() { modal.classList.remove('open'); document.body.style.overflow = ''; }
 document.querySelectorAll('.open-form').forEach(b => b.addEventListener('click', openForm));
 document.querySelectorAll('.close-form').forEach(b => b.addEventListener('click', closeForm));
-modal.addEventListener('click', e => { if(e.target === modal) closeForm(); });
+modal.addEventListener('click', e => { if (e.target === modal) closeForm(); });
 document.getElementById('bform').addEventListener('submit', e => {
   e.preventDefault();
-  const btn = e.target.querySelector('.btn-form-submit');
+  const btn = e.target.querySelector('.btn-submit');
   btn.textContent = '✓ Request Sent!';
-  setTimeout(() => { btn.textContent = 'Send Request'; closeForm(); e.target.reset(); }, 2500);
+  setTimeout(() => { btn.textContent = 'Book now'; closeForm(); e.target.reset(); }, 2500);
 });
 
 // ── Mobile menu ──
@@ -1187,12 +1108,19 @@ ham.addEventListener('click', () => {
   document.body.style.overflow = mOpen ? 'hidden' : '';
 });
 function closeMob() {
-  mOpen = false;
-  mob.classList.remove('open');
+  mOpen = false; mob.classList.remove('open');
   lines[0].style.transform = lines[2].style.transform = '';
   lines[1].style.opacity = '';
   document.body.style.overflow = '';
 }
+
+// ── Filter buttons (cosmetic for now) ──
+document.querySelectorAll('.filter-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+  });
+});
 </script>
 </body>
 </html>
